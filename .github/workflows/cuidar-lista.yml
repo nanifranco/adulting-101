@@ -1,0 +1,70 @@
+# Cuida la lista compartida:
+# - Cada 6 horas abre la lista en jsonblob.com (así nunca queda inactiva).
+# - Guarda una copia en adultez101-respaldo.json dentro de este repo.
+# - Si la lista ya no existe, crea una nueva con la última copia y guarda su código en config.json.
+name: Cuidar la lista
+
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/cuidar-lista.yml"
+      - "config.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cuidar-lista
+  cancel-in-progress: false
+
+jobs:
+  cuidar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Revisar, respaldar o recuperar la lista
+        run: |
+          set -euo pipefail
+          API="https://jsonblob.com/api/jsonBlob"
+          ID="$(jq -r '.id // ""' config.json 2>/dev/null || echo "")"
+          STATUS="none"
+
+          if [ -n "$ID" ]; then
+            STATUS="$(curl -sS -o /tmp/lista.json -w '%{http_code}' -H 'Accept: application/json' "$API/$ID" || echo "000")"
+          fi
+          echo "Código: ${ID:-ninguno} · respuesta: $STATUS"
+
+          if [ "$STATUS" = "200" ] && jq -e '(.nani|type=="array") or (.maria|type=="array")' /tmp/lista.json >/dev/null; then
+            jq . /tmp/lista.json > adultez101-respaldo.json
+          elif [ "$STATUS" = "404" ] || [ "$STATUS" = "none" ]; then
+            echo "La lista no existe: se crea una nueva con el último respaldo."
+            HEADERS="$(curl -sS -D - -o /dev/null -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' --data-binary @adultez101-respaldo.json "$API")"
+            NEW_ID="$(printf '%s' "$HEADERS" | tr -d '\r' | awk 'tolower($1)=="location:"{print $2}' | awk -F/ '{print $NF}')"
+            if [ -z "$NEW_ID" ]; then echo "No se pudo crear la lista nueva"; exit 1; fi
+            jq -n --arg id "$NEW_ID" --arg at "$(date -u +%FT%TZ)" '{id:$id, creada:$at}' > config.json
+            echo "Lista nueva: $NEW_ID"
+          else
+            echo "jsonblob no respondió bien ($STATUS). Se reintenta en la próxima revisión."
+            exit 0
+          fi
+
+          # GitHub apaga las tareas programadas si el repo pasa 60 días sin cambios.
+          # Una vez al mes se anota la fecha de revisión para que eso no pase.
+          LAST="$(git log -1 --format=%ct)"
+          if [ $(( $(date +%s) - LAST )) -gt $(( 30*24*3600 )) ]; then
+            date -u +%FT%TZ > ultima-revision.txt
+          fi
+
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "cuidar-lista[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "Respaldo automático de la lista"
+            git push
+          else
+            echo "Sin cambios."
+          fi

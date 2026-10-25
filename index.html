@@ -94,20 +94,16 @@ input[type=text]{flex:1;min-width:0;font:inherit;font-size:16px;padding:9px 12px
     <div class="sync" id="sync"><span class="dot"></span><span id="syncTxt">Conectando…</span></div>
   </header>
 
-  <!-- Primera vez: crear la lista compartida -->
+  <!-- Mientras GitHub prepara o recupera la lista -->
   <section class="card" id="setup" hidden>
-    <h2>Crear la lista compartida</h2>
-    <p>Esto se hace una sola vez. Se crea la lista con todas sus tareas y te da un link para mandarle a Mari.</p>
-    <div class="row">
-      <button class="btn" id="createBtn">Crear lista</button>
-    </div>
-    <p class="small">¿Ya tienes el link de la lista? Ábrelo y listo.</p>
+    <h2>Preparando la lista</h2>
+    <p id="setupMsg">La lista se está preparando. Esta página se actualiza sola en cuanto esté lista.</p>
   </section>
 
   <!-- Compartir -->
   <section class="card" id="share" hidden>
     <h2>Link para Mari</h2>
-    <p>Mándale este link. Las dos verán la misma lista y los cambios aparecen en unos segundos.</p>
+    <p>Mándale este link. Las dos ven la misma lista y los cambios aparecen en unos segundos.</p>
     <div class="linkbox" id="shareLink"></div>
     <div class="row">
       <button class="btn" id="copyBtn">Copiar link</button>
@@ -152,8 +148,14 @@ input[type=text]{flex:1;min-width:0;font:inherit;font-size:16px;padding:9px 12px
 <div class="toast" id="toast" hidden></div>
 
 <script>
-// La lista vive en jsonblob.com (gratis, sin cuentas). El código de la lista va en el link (#...).
+// La lista vive en jsonblob.com (gratis, sin cuentas). Su código está en config.json del repo.
+// Una tarea de GitHub (.github/workflows/cuidar-lista.yml) la abre cada 6 horas, guarda un respaldo
+// y, si alguna vez se borra, crea una nueva con el último respaldo y actualiza config.json.
 const API = "https://jsonblob.com/api/jsonBlob";
+const CONFIG_URLS = [
+  "https://raw.githubusercontent.com/nanifranco/adulting-101/claude/blissful-mendel-vawmn2/config.json",
+  "config.json",
+];
 const POLL_MS = 5000;
 const TAGS = { career: "Carrera", notes: "Notas" };
 const $ = s => document.querySelector(s);
@@ -165,7 +167,7 @@ function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,2800); }
 function setSync(cls, txt){ $("#sync").className="sync "+cls; $("#syncTxt").textContent=txt; }
 function uid(){ return "id-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8); }
-function shareUrl(){ return location.origin + location.pathname + "#" + state.id; }
+function shareUrl(){ return location.origin + location.pathname; }
 
 const p = lsGet("a101-person"); if (p==="nani"||p==="maria") state.person=p;
 try { state.open = JSON.parse(lsGet("a101-open")||"{}")||{}; } catch(e){}
@@ -181,13 +183,17 @@ async function saveList(data){
   const r = await fetch(API+"/"+state.id, { method:"PUT", headers:{"Content-Type":"application/json",Accept:"application/json"}, body:JSON.stringify(data) });
   if (!r.ok) throw new Error("http "+r.status);
 }
-async function createList(data){
-  const r = await fetch(API, { method:"POST", headers:{"Content-Type":"application/json",Accept:"application/json"}, body:JSON.stringify(data) });
-  if (!r.ok) throw new Error("http "+r.status);
-  const loc = r.headers.get("Location") || r.headers.get("location") || "";
-  const id = r.headers.get("X-jsonblob-id") || r.headers.get("x-jsonblob") || loc.split("/").pop();
-  if (!id) throw new Error("sin id");
-  return id;
+// Lee el código de la lista desde el repo (el más reciente que encuentre).
+async function loadConfigId(){
+  for (const u of CONFIG_URLS){
+    try {
+      const r = await fetch(u+"?t="+Date.now(), { cache:"no-store" });
+      if (!r.ok) continue;
+      const id = String((await r.json()).id||"").replace(/[^A-Za-z0-9_-]/g,"");
+      if (id) return id;
+    } catch(e){}
+  }
+  return null;
 }
 
 // Cambios: se lee la versión más nueva, se aplica el cambio y se guarda. Así no se pisan los cambios de la otra persona.
@@ -221,7 +227,7 @@ async function poll(){
     if (JSON.stringify(fresh)!==JSON.stringify(state.data)){ state.data=fresh; render(); }
     setSync("live","En vivo");
   } catch(e){
-    if (e.code==="notfound"){ setSync("err","No se encontró la lista"); }
+    if (e.code==="notfound"){ setSync("err","Recuperando la lista…"); recheckConfig(); }
     else setSync("err","Sin conexión");
   }
 }
@@ -305,15 +311,44 @@ function render(){
 
 function showShare(){ $("#shareLink").textContent=shareUrl(); $("#share").hidden=false; $("#shareNative").hidden=!navigator.share; $("#share").scrollIntoView({behavior:"smooth"}); }
 
-async function start(){
-  $("#setup").hidden=true; $("#main").hidden=false;
-  if (location.hash.slice(1)!==state.id) history.replaceState(null,"","#"+state.id);
-  try { state.data=await fetchList(); setSync("live","En vivo"); render(); }
-  catch(e){
-    $("#sections").innerHTML='<div class="empty">'+(e.code==="notfound"?"No se encontró esta lista. Revisa que el link esté completo.":"No hay conexión. Se volverá a intentar en unos segundos.")+'</div>';
-    setSync("err", e.code==="notfound"?"No se encontró la lista":"Sin conexión");
+// Si la lista no aparece, revisa si GitHub ya puso un código nuevo.
+let lastRecheck=0;
+async function recheckConfig(){
+  if (Date.now()-lastRecheck < 30000) return;
+  lastRecheck=Date.now();
+  const id = await loadConfigId();
+  if (id && id!==state.id){ state.id=id; lsSet("a101-id",id); state.data=null; await loadData(); }
+}
+async function loadData(){
+  if (!state.id){
+    $("#setup").hidden=false; $("#main").hidden=true; setSync("","Preparando…");
+    return;
   }
-  setInterval(()=>{ if(!state.data) fetchList().then(d=>{state.data=d;render();}).catch(()=>{}); else poll(); }, POLL_MS);
+  try {
+    state.data=await fetchList();
+    $("#setup").hidden=true; $("#main").hidden=false;
+    setSync("live","En vivo"); render();
+  } catch(e){
+    if (e.code==="notfound"){
+      $("#setup").hidden=false; $("#main").hidden=true;
+      $("#setupMsg").textContent="La lista se está recuperando del último respaldo. Esta página se actualiza sola en cuanto esté lista.";
+      setSync("err","Recuperando la lista…"); recheckConfig();
+    } else {
+      $("#main").hidden=false;
+      if (!state.data) $("#sections").innerHTML='<div class="empty">No hay conexión. Se vuelve a intentar en unos segundos.</div>';
+      setSync("err","Sin conexión");
+    }
+  }
+}
+async function start(){
+  state.id = (await loadConfigId()) || lsGet("a101-id");
+  if (state.id) lsSet("a101-id", state.id);
+  await loadData();
+  setInterval(async ()=>{
+    if (!state.id){ lastRecheck=0; state.id=await loadConfigId(); if(state.id) loadData(); return; }
+    if (!state.data){ if (!state.busy) { await recheckConfig(); if(!state.data) loadData(); } }
+    else poll();
+  }, POLL_MS);
   document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) poll(); });
 }
 
@@ -321,15 +356,6 @@ async function start(){
 document.querySelectorAll(".switch button").forEach(b=>b.addEventListener("click",()=>{ state.person=b.dataset.p; lsSet("a101-person",state.person); render(); }));
 document.querySelectorAll(".filter button").forEach(b=>b.addEventListener("click",()=>{ state.filter=b.dataset.f; render(); }));
 
-$("#createBtn").addEventListener("click", async ()=>{
-  const b=$("#createBtn"); b.disabled=true; b.textContent="Creando…";
-  try {
-    const seed = await (await fetch("adultez101-respaldo.json",{cache:"no-store"})).json();
-    state.id = await createList(seed);
-    lsSet("a101-id", state.id);
-    await start(); showShare();
-  } catch(e){ toast("No se pudo crear la lista. Revisa tu internet e inténtalo otra vez."); b.disabled=false; b.textContent="Crear lista"; }
-});
 $("#openShare").addEventListener("click", showShare);
 $("#closeShare").addEventListener("click", ()=>$("#share").hidden=true);
 $("#copyBtn").addEventListener("click", async ()=>{
@@ -356,10 +382,7 @@ $("#importFile").addEventListener("change", async e=>{
 });
 
 // ---------- arranque ----------
-const fromHash = decodeURIComponent(location.hash.slice(1)).replace(/[^A-Za-z0-9_-]/g,"");
-state.id = fromHash || lsGet("a101-id");
-if (state.id){ lsSet("a101-id", state.id); start(); }
-else { $("#setup").hidden=false; setSync("", "Sin lista todavía"); }
+start();
 </script>
 </body>
 </html>
