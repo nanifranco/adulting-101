@@ -1,0 +1,11 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Cada lista vive en listas/<llave>. Solo quien conoce la llave (va en el link) puede leerla o cambiarla.
+    // Nadie puede ver qué listas existen ni borrarlas.
+    match /listas/{llave} {
+      allow get, create, update: if llave.size() >= 20;
+      allow list, delete: if false;
+    }
+  }
+}
