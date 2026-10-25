@@ -42,9 +42,13 @@ jobs:
             jq . /tmp/lista.json > adultez101-respaldo.json
           elif [ "$STATUS" = "404" ] || [ "$STATUS" = "none" ]; then
             echo "La lista no existe: se crea una nueva con el último respaldo."
-            HEADERS="$(curl -sS -D - -o /dev/null -X POST -H 'Content-Type: application/json' -H 'Accept: application/json' --data-binary @adultez101-respaldo.json "$API")"
+            HEADERS="$(curl -sS -D - -o /dev/null -X POST -A 'adultez101-github-action'  -H 'Content-Type: application/json' -H 'Accept: application/json' --data-binary @adultez101-respaldo.json "$API")"
             NEW_ID="$(printf '%s' "$HEADERS" | tr -d '\r' | awk 'tolower($1)=="location:"{print $2}' | awk -F/ '{print $NF}')"
-            if [ -z "$NEW_ID" ]; then echo "No se pudo crear la lista nueva"; exit 1; fi
+            if [ -z "$NEW_ID" ]; then
+              echo "No se pudo crear la lista nueva. Respuesta de jsonblob:"
+              printf '%s\n' "$HEADERS" | head -20
+              exit 1
+            fi
             jq -n --arg id "$NEW_ID" --arg at "$(date -u +%FT%TZ)" '{id:$id, creada:$at}' > config.json
             echo "Lista nueva: $NEW_ID"
           else
