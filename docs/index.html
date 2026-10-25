@@ -96,18 +96,16 @@ input[type=text]{flex:1;min-width:0;font:inherit;font-size:16px;padding:9px 12px
 
   <!-- Avisos y primera vez -->
   <section class="card" id="setup" hidden>
-    <h2 id="setupTitle">Crear la lista compartida</h2>
-    <p id="setupMsg">Esto se hace una sola vez. Se crea la lista con todas las tareas y te da un link para mandarle a Mari.</p>
-    <div class="row" id="setupActions">
-      <button class="btn" id="createBtn">Crear lista</button>
-    </div>
-    <p class="small" id="setupNote">¿Nani ya te mandó el link? Ábrelo desde ese mensaje.</p>
+    <h2 id="setupTitle">Cargando la lista…</h2>
+    <p id="setupMsg"></p>
+    <div class="row" id="setupActions" hidden></div>
+    <p class="small" id="setupNote" hidden></p>
   </section>
 
   <!-- Compartir -->
   <section class="card" id="share" hidden>
     <h2>Link para Mari</h2>
-    <p>Mándale este link. Las dos ven la misma lista y los cambios aparecen al instante. Guárdalo bien: es la llave de la lista.</p>
+    <p>Mándale este link. Las dos ven la misma lista y los cambios aparecen al instante.</p>
     <div class="linkbox" id="shareLink"></div>
     <div class="row">
       <button class="btn" id="copyBtn">Copiar link</button>
@@ -169,6 +167,8 @@ window.FIREBASE_CONFIG = {
 // Cada lista es un documento listas/<llave>. La llave va en el link (#...), así que solo quien
 // tiene el link puede verla o cambiarla. Cada teléfono guarda además una copia propia.
 const TAGS = { career: "Carrera", notes: "Notas" };
+// Llave de la lista compartida de Nani y Mari (documento listas/<llave> en Firestore).
+const LISTA = "fnq627q2mc6gafh6bd5nk4bk";
 const $ = s => document.querySelector(s);
 const state = { id:null, data:null, person:"nani", filter:"all", open:{}, confirmDel:null };
 let ref = null;
@@ -178,8 +178,7 @@ function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,2800); }
 function setSync(cls, txt){ $("#sync").className="sync "+cls; $("#syncTxt").textContent=txt; }
 function uid(){ return "id-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8); }
-function newKey(){ const a=new Uint8Array(24); crypto.getRandomValues(a); return Array.from(a,b=>"abcdefghijkmnpqrstuvwxyz23456789"[b%32]).join(""); }
-function shareUrl(){ return location.origin + location.pathname + "#" + state.id; }
+function shareUrl(){ return location.origin + location.pathname; }
 function clean(d){ return { nani: Array.isArray(d?.nani)?d.nani:[], maria: Array.isArray(d?.maria)?d.maria:[] }; }
 
 const p0 = lsGet("a101-person"); if (p0==="nani"||p0==="maria") state.person=p0;
@@ -285,24 +284,32 @@ function showSetup(title, msg, showCreate, note){
 function showShare(){ $("#shareLink").textContent=shareUrl(); $("#share").hidden=false; $("#shareNative").hidden=!navigator.share; $("#share").scrollIntoView({behavior:"smooth"}); }
 
 // ---------- conexión ----------
+let creating = false;
 function connect(){
-  if (location.hash.slice(1)!==state.id) history.replaceState(null,"","#"+state.id);
-  lsSet("a101-id", state.id);
   // Mientras llega la lista, se muestra la copia guardada en este teléfono.
   try { const c=JSON.parse(lsGet("a101-copia-"+state.id)||"null"); if (c){ state.data=clean(c); $("#setup").hidden=true; $("#main").hidden=false; render(); } } catch(e){}
   ref.onSnapshot({ includeMetadataChanges:true }, snap=>{
     if (!snap.exists){
       if (snap.metadata.fromCache) return;
-      const copia = lsGet("a101-copia-"+state.id);
-      if (copia){
-        // Si la lista desapareció, se vuelve a subir la copia de este teléfono.
-        ref.set({ ...clean(JSON.parse(copia)), actualizado: firebase.firestore.FieldValue.serverTimestamp() })
-          .then(()=>toast("La lista se recuperó con la copia de este teléfono"))
-          .catch(()=>{});
-        return;
-      }
-      showSetup("No se encontró la lista", "Revisa que el link esté completo, con todo lo que va después del #.", false, null);
-      setSync("err","Lista no encontrada"); return;
+      // La lista no existe todavía (o desapareció): se crea con la copia de este teléfono
+      // o, si no hay, con el respaldo inicial. La transacción evita que dos teléfonos la creen a la vez.
+      if (creating) return;
+      creating = true;
+      (async ()=>{
+        try {
+          const copia = lsGet("a101-copia-"+state.id);
+          const seed = copia ? clean(JSON.parse(copia)) : clean(await (await fetch("adultez101-respaldo.json",{cache:"no-store"})).json());
+          await ref.firestore.runTransaction(async tx=>{
+            const cur = await tx.get(ref);
+            if (!cur.exists) tx.set(ref, { ...seed, actualizado: firebase.firestore.FieldValue.serverTimestamp() });
+          });
+        } catch(e){
+          console.error(e);
+          showSetup("No se pudo abrir la lista", "Revisa tu internet y recarga la página.", false, null);
+          setSync("err","Sin acceso");
+        } finally { creating = false; }
+      })();
+      return;
     }
     state.data = clean(snap.data());
     if (!snap.metadata.hasPendingWrites) lsSet("a101-copia-"+state.id, JSON.stringify(state.data));
@@ -315,16 +322,6 @@ function connect(){
 // ---------- botones ----------
 document.querySelectorAll(".switch button").forEach(b=>b.addEventListener("click",()=>{ state.person=b.dataset.p; lsSet("a101-person",state.person); render(); }));
 document.querySelectorAll(".filter button").forEach(b=>b.addEventListener("click",()=>{ state.filter=b.dataset.f; render(); }));
-$("#createBtn").addEventListener("click", async ()=>{
-  const b=$("#createBtn"); b.disabled=true; b.textContent="Creando…";
-  try {
-    const seed = clean(await (await fetch("adultez101-respaldo.json",{cache:"no-store"})).json());
-    state.id = newKey();
-    ref = firebase.firestore().collection("listas").doc(state.id);
-    await ref.set({ ...seed, actualizado: firebase.firestore.FieldValue.serverTimestamp() });
-    connect(); showShare();
-  } catch(e){ console.error(e); toast("No se pudo crear la lista. Revisa tu internet e inténtalo otra vez."); b.disabled=false; b.textContent="Crear lista"; }
-});
 $("#openShare").addEventListener("click", showShare);
 $("#closeShare").addEventListener("click", ()=>$("#share").hidden=true);
 $("#copyBtn").addEventListener("click", async ()=>{
@@ -362,10 +359,10 @@ $("#importFile").addEventListener("change", async e=>{
   firebase.initializeApp(cfg);
   const fs = firebase.firestore();
   fs.enablePersistence({ synchronizeTabs:true }).catch(()=>{});
-  const fromHash = decodeURIComponent(location.hash.slice(1)).replace(/[^A-Za-z0-9]/g,"");
-  state.id = (fromHash.length>=20 ? fromHash : null) || lsGet("a101-id");
-  if (state.id){ ref = fs.collection("listas").doc(state.id); connect(); }
-  else { showSetup("Crear la lista compartida", "Esto se hace una sola vez. Se crea la lista con todas las tareas y te da un link para mandarle a Mari.", true, "¿Nani ya te mandó el link? Ábrelo desde ese mensaje."); setSync("","Sin lista todavía"); }
+  state.id = LISTA;
+  ref = fs.collection("listas").doc(state.id);
+  showSetup("Cargando la lista…", "Un momento.", false, null);
+  connect();
 })();
 </script>
 </body>
