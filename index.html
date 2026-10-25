@@ -1,0 +1,280 @@
+<title>Adultez 101</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow phone column — person switch, progress card, folding sections of checkboxes */
+:root{
+  --bg:#f3f5f2; --surface:#ffffff; --fg:#1d2420; --muted:#66706a; --line:#dde3de;
+  --nani:#2f6b4f; --nani-soft:#e1efe6; --mari:#8a3f6b; --mari-soft:#f4e3ec;
+  --accent:var(--nani); --accent-soft:var(--nani-soft); --danger:#b3392f;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"Figtree",ui-sans-serif,system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141917; --surface:#1c2320; --fg:#e7ece8; --muted:#97a29b; --line:#2c3531;
+  --nani:#7cc59f; --nani-soft:#203a2d; --mari:#e39ac4; --mari-soft:#3d2533; --danger:#ef8a80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141917; --surface:#1c2320; --fg:#e7ece8; --muted:#97a29b; --line:#2c3531;
+  --nani:#7cc59f; --nani-soft:#203a2d; --mari:#e39ac4; --mari-soft:#3d2533; --danger:#ef8a80; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.45}
+body.mari{--accent:var(--mari);--accent-soft:var(--mari-soft)}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px;display:flex;flex-direction:column;gap:16px}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-family:var(--display);font-weight:800;font-size:2rem;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1 span{color:var(--accent)}
+.sync{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:6px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.sync.live .dot{background:#3aa66a}
+.sync.err .dot{background:var(--danger)}
+.switch{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px}
+.switch button{font:600 1rem var(--body);border:0;border-radius:10px;padding:10px;background:transparent;color:var(--muted);cursor:pointer}
+.switch button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.switch button:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.summary{background:var(--accent-soft);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.summary .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.big{font-family:var(--display);font-weight:800;font-size:2.4rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
+.small{color:var(--muted);font-size:.85rem;font-variant-numeric:tabular-nums}
+.bar{height:8px;border-radius:99px;background:var(--surface);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+.filter{display:flex;gap:8px;flex-wrap:wrap}
+.filter button{font:500 .85rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:99px;padding:6px 12px;cursor:pointer}
+.filter button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
+.sections{display:flex;flex-direction:column;gap:10px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+summary::-webkit-details-marker{display:none}
+.shead{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.stitle{font-family:var(--display);font-weight:600;font-size:1.08rem;min-width:0}
+.scount{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.scount::after{content:"›";font-size:1.2rem;transition:transform .2s;display:inline-block}
+details[open] .scount::after{transform:rotate(90deg)}
+.sbar{height:4px;border-radius:99px;background:var(--line);overflow:hidden}
+.sbar i{display:block;height:100%;background:var(--accent)}
+.tag{font:600 .68rem var(--body);text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-right:6px}
+ul{list-style:none;margin:0;padding:0 8px 8px}
+li{display:flex;align-items:flex-start;gap:12px;padding:10px 8px;border-top:1px solid var(--line)}
+li label{display:flex;gap:12px;align-items:flex-start;flex:1;min-width:0;cursor:pointer}
+li input[type=checkbox]{appearance:none;flex:none;width:22px;height:22px;border:2px solid var(--muted);border-radius:7px;margin:1px 0 0;display:grid;place-items:center;cursor:pointer;background:var(--surface)}
+li input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
+li input[type=checkbox]:checked::after{content:"";width:6px;height:11px;border:solid var(--surface);border-width:0 2.5px 2.5px 0;transform:translateY(-1px) rotate(45deg)}
+li .txt{overflow-wrap:anywhere}
+li.done .txt{color:var(--muted);text-decoration:line-through}
+.del{border:0;background:transparent;color:var(--muted);font-size:1.1rem;line-height:1;padding:4px 6px;border-radius:6px;cursor:pointer}
+.del:hover{color:var(--danger)}
+.del.confirm{color:var(--surface);background:var(--danger);font-size:.75rem;font-weight:600;padding:5px 8px}
+form.add{display:flex;gap:8px;padding:10px 8px 6px;border-top:1px solid var(--line)}
+form.add input{flex:1;min-width:0;font:inherit;font-size:.95rem;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg)}
+.btn{font:600 .9rem var(--body);border:0;border-radius:10px;padding:9px 14px;background:var(--accent);color:var(--surface);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:24px;text-align:center;color:var(--muted)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding-top:8px}
+.tools .note{width:100%;text-align:center;font-size:.8rem;color:var(--muted)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;max-width:calc(100% - 32px)}
+.ro .del,.ro form.add{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap" id="app">
+  <header>
+    <h1>Adultez <span>101</span></h1>
+    <div class="sync" id="sync"><span class="dot"></span><span id="syncTxt">Conectando…</span></div>
+  </header>
+
+  <div class="switch" role="group" aria-label="De quién es la lista">
+    <button id="tab-nani" data-p="nani" aria-pressed="true">Nani</button>
+    <button id="tab-maria" data-p="maria" aria-pressed="false">Mari</button>
+  </div>
+
+  <section class="summary" aria-live="polite">
+    <div class="row">
+      <div class="big" id="pct">0%</div>
+      <div class="small" id="cnt">0 de 0 listos</div>
+    </div>
+    <div class="bar"><i id="barFill" style="width:0%"></i></div>
+    <div class="small" id="other"></div>
+  </section>
+
+  <div class="filter" role="group" aria-label="Filtro">
+    <button id="f-all" data-f="all" aria-pressed="true">Todo</button>
+    <button id="f-todo" data-f="todo" aria-pressed="false">Pendientes</button>
+    <button id="f-done" data-f="done" aria-pressed="false">Hechos</button>
+  </div>
+
+  <div class="sections" id="sections">
+    <div class="empty">Cargando la lista…</div>
+  </div>
+
+  <div class="tools">
+    <button class="btn ghost" id="exportBtn" hidden>Descargar respaldo</button>
+    <button class="btn ghost" id="importBtn" hidden>Restaurar desde respaldo</button>
+    <input type="file" id="importFile" accept=".json,application/json" hidden>
+    <p class="note" id="roNote" hidden>Solo puedes ver esta lista. Pide acceso de Editor para marcar tareas.</p>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const state = { person: "nani", filter: "all", sections: [], open: {}, canWrite: true, confirmDel: null };
+const TAGS = { career: "Carrera", notes: "Notas" };
+let db = null, col = null;
+
+try { const p = localStorage.getItem("a101-person"); if (p === "nani" || p === "maria") state.person = p; } catch (e) {}
+try { state.open = JSON.parse(localStorage.getItem("a101-open") || "{}") || {}; } catch (e) {}
+
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,2600); }
+function setSync(cls, txt){ const s=$("#sync"); s.className="sync "+cls; $("#syncTxt").textContent=txt; }
+function uid(){ return "id-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8); }
+
+function stats(person){
+  let total=0, done=0;
+  for (const s of state.sections) if (s.owner===person) for (const t of s.tasks){ total++; if (t.done) done++; }
+  return { total, done, pct: total ? Math.round(done/total*100) : 0 };
+}
+
+function render(){
+  document.body.classList.toggle("mari", state.person==="maria");
+  document.body.classList.toggle("ro", !state.canWrite);
+  for (const b of document.querySelectorAll(".switch button")) b.setAttribute("aria-pressed", b.dataset.p===state.person);
+  for (const b of document.querySelectorAll(".filter button")) b.setAttribute("aria-pressed", b.dataset.f===state.filter);
+
+  const me = stats(state.person), otherKey = state.person==="nani" ? "maria" : "nani", ot = stats(otherKey);
+  $("#pct").textContent = me.pct+"%";
+  $("#cnt").textContent = me.done+" de "+me.total+" listos";
+  $("#barFill").style.width = me.pct+"%";
+  $("#other").textContent = ot.total ? (otherKey==="nani"?"Nani":"Mari")+" va en "+ot.pct+"% ("+ot.done+" de "+ot.total+")" : "";
+
+  const box = $("#sections");
+  const mine = state.sections.filter(s=>s.owner===state.person).sort((a,b)=>(a.order??0)-(b.order??0));
+  if (!state.sections.length){ box.innerHTML='<div class="empty">'+(db?"Todavía no hay tareas. Usa “Restaurar desde respaldo” para cargar tu archivo .json.":"Cargando la lista…")+'</div>'; return; }
+  if (!mine.length){ box.innerHTML='<div class="empty">Esta lista está vacía.</div>'; return; }
+
+  box.textContent="";
+  for (const s of mine){
+    const done = s.tasks.filter(t=>t.done).length, total=s.tasks.length;
+    const d = document.createElement("details");
+    d.dataset.id = s.id;
+    if (state.open[s.id]) d.open = true;
+    d.addEventListener("toggle", ()=>{ state.open[s.id]=d.open; try{localStorage.setItem("a101-open",JSON.stringify(state.open));}catch(e){} });
+
+    const sum = document.createElement("summary");
+    const head = document.createElement("div"); head.className="shead";
+    const title = document.createElement("div"); title.className="stitle";
+    if (TAGS[s.type]){ const tg=document.createElement("span"); tg.className="tag"; tg.textContent=TAGS[s.type]; title.append(tg); }
+    title.append(document.createTextNode(s.title));
+    const c = document.createElement("div"); c.className="scount"; c.textContent = done+"/"+total;
+    head.append(title,c);
+    const sb = document.createElement("div"); sb.className="sbar"; sb.innerHTML='<i style="width:'+(total?done/total*100:0)+'%"></i>';
+    sum.append(head,sb); d.append(sum);
+
+    const ul = document.createElement("ul");
+    for (const t of s.tasks){
+      if (state.filter==="todo" && t.done) continue;
+      if (state.filter==="done" && !t.done) continue;
+      const li = document.createElement("li"); if (t.done) li.className="done";
+      const lab = document.createElement("label");
+      const cb = document.createElement("input"); cb.type="checkbox"; cb.checked=!!t.done; cb.id="cb-"+t.id; cb.disabled=!state.canWrite;
+      cb.addEventListener("change", ()=>toggleTask(s.id, t.id, cb.checked));
+      const sp = document.createElement("span"); sp.className="txt"; sp.textContent=t.text;
+      lab.append(cb,sp); li.append(lab);
+      const del = document.createElement("button"); del.type="button"; del.className="del"; del.setAttribute("aria-label","Borrar tarea");
+      const key = s.id+"|"+t.id;
+      if (state.confirmDel===key){ del.classList.add("confirm"); del.textContent="¿Borrar?"; } else del.textContent="×";
+      del.addEventListener("click", ()=>{
+        if (state.confirmDel===key){ state.confirmDel=null; deleteTask(s.id,t.id); }
+        else { state.confirmDel=key; render(); clearTimeout(render.cd); render.cd=setTimeout(()=>{ if(state.confirmDel===key){state.confirmDel=null;render();} },4000); }
+      });
+      li.append(del); ul.append(li);
+    }
+    d.append(ul);
+
+    const f = document.createElement("form"); f.className="add";
+    const inp = document.createElement("input"); inp.id="add-"+s.id; inp.placeholder="Agregar tarea…"; inp.setAttribute("aria-label","Nueva tarea en "+s.title);
+    const btn = document.createElement("button"); btn.className="btn"; btn.textContent="Agregar";
+    f.append(inp,btn);
+    f.addEventListener("submit", e=>{ e.preventDefault(); const v=inp.value.trim(); if(!v) return; inp.value=""; addTask(s.id,v); });
+    d.append(f);
+    box.append(d);
+  }
+}
+
+// One write at a time per section document.
+const queues = {};
+function writeSection(id, mutate){
+  const run = async ()=>{
+    const s = state.sections.find(x=>x.id===id); if (!s) return;
+    const tasks = mutate(s.tasks.map(t=>({...t})));
+    s.tasks = tasks; render();
+    try { await col.doc(id).update({ tasks }); }
+    catch(e){
+      if (e && e.code==="invalid_argument"){ state.canWrite=false; render(); toast("No tienes permiso para editar esta lista."); }
+      else toast("No se guardó el cambio. Revisa tu conexión e inténtalo otra vez.");
+    }
+  };
+  queues[id] = (queues[id]||Promise.resolve()).then(run, run);
+}
+function toggleTask(sid, tid, done){ writeSection(sid, ts=>ts.map(t=>t.id===tid?{...t,done}:t)); }
+function deleteTask(sid, tid){ writeSection(sid, ts=>ts.filter(t=>t.id!==tid)); toast("Tarea borrada"); }
+function addTask(sid, text){ writeSection(sid, ts=>[...ts,{id:uid(),text,done:false}]); }
+
+function toBackup(){
+  const out = { nani: [], maria: [] };
+  for (const s of [...state.sections].sort((a,b)=>(a.order??0)-(b.order??0)))
+    (out[s.owner] ||= []).push({ id:s.id, title:s.title, type:s.type, tasks:s.tasks });
+  return out;
+}
+
+async function importBackup(file){
+  let data;
+  try { data = JSON.parse(await file.text()); } catch(e){ toast("Ese archivo no es un respaldo válido (.json)."); return; }
+  if (!data || (!Array.isArray(data.nani) && !Array.isArray(data.maria))){ toast("El archivo no tiene listas de Nani o Mari."); return; }
+  let n=0;
+  try{
+    for (const owner of ["nani","maria"]){
+      const list = data[owner]||[];
+      for (let i=0;i<list.length;i++){
+        const s=list[i]; const id = String(s.id||uid()).replace(/[^A-Za-z0-9_\-.~:@+]/g,"-");
+        await col.doc(id).set({ owner, order:i, title:String(s.title||"Sin título"), type:String(s.type||"adult"),
+          tasks:(s.tasks||[]).map(t=>({id:String(t.id||uid()),text:String(t.text||""),done:!!t.done})) });
+        n++;
+      }
+    }
+    toast("Respaldo restaurado ("+n+" secciones)");
+  } catch(e){ toast("No se pudo restaurar el respaldo. Inténtalo otra vez."); }
+}
+
+for (const b of document.querySelectorAll(".switch button")) b.addEventListener("click", ()=>{
+  state.person=b.dataset.p; try{localStorage.setItem("a101-person",state.person);}catch(e){} render();
+});
+for (const b of document.querySelectorAll(".filter button")) b.addEventListener("click", ()=>{ state.filter=b.dataset.f; render(); });
+$("#importBtn").addEventListener("click", ()=>$("#importFile").click());
+$("#importFile").addEventListener("change", e=>{ const f=e.target.files[0]; e.target.value=""; if(f) importBackup(f); });
+
+render();
+
+(async ()=>{
+  db = await window.claude?.use?.("db");
+  if (!db){ setSync("err","Sin conexión a la lista"); $("#sections").innerHTML='<div class="empty">Abre esta página desde claude.ai con tu cuenta para ver y editar la lista.</div>'; return; }
+  col = db.collection("sections");
+  const user = await window.claude.use("user");
+  const cw = user ? await user.can("data.write") : null;
+  if (cw === false){ state.canWrite=false; $("#roNote").hidden=false; }
+  else { $("#importBtn").hidden=false; }
+  col.onSnapshot(snap=>{
+    state.sections = snap.docs.map(d=>({ id:d.id, ...d.data(), tasks:[...((d.data().tasks)||[])].map(t=>({...t})) }));
+    setSync("live", snap.metadata.fromCache ? "Sincronizando…" : "En vivo");
+    render();
+  }, err=>{ setSync("err","Se perdió la conexión. Recarga la página."); });
+
+  const dl = await window.claude.use("downloads");
+  if (dl){
+    const eb=$("#exportBtn"); eb.hidden=false;
+    eb.addEventListener("click", async ()=>{
+      const d = new Date().toISOString().slice(0,10);
+      try { await dl.save({ filename:"adultez101-respaldo-"+d+".json", data: JSON.stringify(toBackup(),null,2) }); }
+      catch(e){ if (e && e.code!=="declined") toast("No se pudo descargar el respaldo."); }
+    });
+  }
+})();
+</script>

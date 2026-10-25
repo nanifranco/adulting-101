@@ -1,0 +1,1315 @@
+{
+  "nani": [
+    {
+      "id": "nani-s0",
+      "title": "Vida digital y organización",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "nani-s0-t0",
+          "text": "Crear correo electrónico profesional",
+          "done": true
+        },
+        {
+          "id": "nani-s0-t1",
+          "text": "Limpiar correos antiguos",
+          "done": false
+        },
+        {
+          "id": "nani-s0-t2",
+          "text": "Cancelar suscripciones de correos innecesarias",
+          "done": false
+        },
+        {
+          "id": "nani-s0-t3",
+          "text": "Actualizar teléfonos y correos de recuperación de cuentas importantes",
+          "done": false
+        },
+        {
+          "id": "nani-s0-t4",
+          "text": "Arreglar gestión de passwords",
+          "done": false
+        },
+        {
+          "id": "nani-s0-t5",
+          "text": "Crear calendario personal de pendientes y vencimientos",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "nani-s1",
+      "title": "Carpeta de documentos importantes",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "nani-s1-t0",
+          "text": "Crear carpeta digital organizada de documentos importantes",
+          "done": true
+        },
+        {
+          "id": "nani-s1-t1",
+          "text": "CURP certificada",
+          "done": true
+        },
+        {
+          "id": "nani-s1-t2",
+          "text": "Acta de nacimiento",
+          "done": true
+        },
+        {
+          "id": "nani-s1-t3",
+          "text": "INE por ambos lados",
+          "done": true
+        },
+        {
+          "id": "nani-s1-t4",
+          "text": "Pasaporte mexicano",
+          "done": true
+        },
+        {
+          "id": "nani-s1-t5",
+          "text": "Licencia de conducir (si aplica)",
+          "done": true
+        },
+        {
+          "id": "nani-s1-t6",
+          "text": "Constancia de Situación Fiscal (RFC)",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t7",
+          "text": "Número de Seguridad Social (NSS)",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t8",
+          "text": "Cartilla de vacunación",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t9",
+          "text": "Certificado de primaria (ver si lo encuentro)",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t10",
+          "text": "Certificado de secundaria (ver si lo encuentro)",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t11",
+          "text": "Certificado de preparatoria",
+          "done": true
+        },
+        {
+          "id": "nani-s1-t12",
+          "text": "Constancia de estudios universitarios",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t13",
+          "text": "Historial académico universitario",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t15",
+          "text": "Certificado oficial de inglés",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t17",
+          "text": "Diplomas, cursos y reconocimientos",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t19",
+          "text": "Constancias laborales y de prácticas",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t21",
+          "text": "Contratos laborales y recibos de nómina",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t22",
+          "text": "Documentos bancarios y CLABE",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t23",
+          "text": "Contratos y estados de cuenta de inversiones",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t24",
+          "text": "Constancia o estado de cuenta AFORE",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t25",
+          "text": "Reporte de semanas cotizadas IMSS",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t27",
+          "text": "Pólizas de seguros",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t28",
+          "text": "Información médica importante y alergias",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t29",
+          "text": "Contactos de emergencia",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t33",
+          "text": "Guardar originales físicos",
+          "done": false
+        },
+        {
+          "id": "nani-s1-t34",
+          "text": "Crear respaldo de documentos",
+          "done": false
+        },
+        {
+          "id": "id-mvmda1m0-ajye7qa",
+          "text": "Pasaporte español",
+          "done": true
+        },
+        {
+          "id": "id-mvmdgghq-9xn7my2",
+          "text": "Tomarme fotografias para documentos",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "nani-career",
+      "title": "Desarrollo profesional",
+      "type": "career",
+      "tasks": [
+        {
+          "id": "nani-career-t0",
+          "text": "Publicar en LinkedIn sobre mi intercambio en SKKU",
+          "done": false
+        },
+        {
+          "id": "nani-career-t1",
+          "text": "Actualizar LinkedIn con Cryoinfra y SKKU",
+          "done": false
+        },
+        {
+          "id": "nani-career-t2",
+          "text": "Actualizar CV en español e inglés",
+          "done": false
+        },
+        {
+          "id": "nani-career-t3",
+          "text": "Tomarme fotografías profesionales",
+          "done": false
+        },
+        {
+          "id": "nani-career-t4",
+          "text": "Organizar/Hacer proyectos académicos para portafolio",
+          "done": false
+        },
+        {
+          "id": "nani-career-t5",
+          "text": "Crear portafolio de ingeniería y negocios",
+          "done": false
+        },
+        {
+          "id": "nani-career-t6",
+          "text": "Solicitar referencias profesionales y académicas",
+          "done": false
+        },
+        {
+          "id": "nani-career-t7",
+          "text": "Inscribirme a Excel avanzado",
+          "done": false
+        },
+        {
+          "id": "nani-career-t9",
+          "text": "Tomar un curso de gestión de proyectos",
+          "done": false
+        },
+        {
+          "id": "nani-career-t12",
+          "text": "Buscar prácticas o empleo al regresar a México",
+          "done": false
+        },
+        {
+          "id": "nani-career-t13",
+          "text": "Desarrollar liderazgo y negociación",
+          "done": false
+        },
+        {
+          "id": "nani-career-t14",
+          "text": "Investigar maestrías",
+          "done": false
+        },
+        {
+          "id": "nani-career-t15",
+          "text": "Definir plan de carrera hacia dirección empresarial,  Industrial o  emprendimiento",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "nani-s2",
+      "title": "Trámites mexicanos",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "nani-s2-t0",
+          "text": "Verificar RFC y régimen fiscal en SAT",
+          "done": false
+        },
+        {
+          "id": "nani-s2-t1",
+          "text": "Revisar acceso al portal del SAT",
+          "done": false
+        },
+        {
+          "id": "nani-s2-t2",
+          "text": "Revisar si necesito e.firma",
+          "done": false
+        },
+        {
+          "id": "nani-s2-t3",
+          "text": "Consultar vigencia de derechos IMSS",
+          "done": false
+        },
+        {
+          "id": "nani-s2-t4",
+          "text": "Consultar semanas cotizadas IMSS",
+          "done": false
+        },
+        {
+          "id": "nani-s2-t5",
+          "text": "Localizar AFORE y verificar datos",
+          "done": false
+        },
+        {
+          "id": "nani-s2-t6",
+          "text": "Revisar beneficiarios de cuentas y AFORE",
+          "done": false
+        },
+        {
+          "id": "nani-s2-t7",
+          "text": "Consultar Reporte de Crédito Especial",
+          "done": false
+        },
+        {
+          "id": "nani-s2-t8",
+          "text": "Revisar vencimiento de documentos oficiales",
+          "done": false
+        },
+        {
+          "id": "nani-s2-t9",
+          "text": "Entender obligaciones fiscales como trabajadora",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "nani-s3",
+      "title": "Finanzas personales",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "nani-s3-t0",
+          "text": "Inventario de cuentas bancarias",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t1",
+          "text": "Cerrar cuentas bancarias sin uso",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t2",
+          "text": "Registrar inversiones y saldos",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t3",
+          "text": "Revisar últimos tres meses de estados de cuenta",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t4",
+          "text": "Identificar suscripciones y gastos recurrentes",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t5",
+          "text": "Cancelar servicios innecesarios",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t6",
+          "text": "Crear Excel maestro de finanzas",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t7",
+          "text": "Registrar ingresos y gastos mensuales",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t8",
+          "text": "Clasificar gastos por categoría",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t9",
+          "text": "Crear presupuesto mensual",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t10",
+          "text": "Calcular patrimonio neto",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t11",
+          "text": "Crear calendario de pagos",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t12",
+          "text": "Definir metas de ahorro a 12 meses",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t13",
+          "text": "Separar gastos, ahorro e inversiones",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t14",
+          "text": "Organizar comprobantes financieros",
+          "done": false
+        },
+        {
+          "id": "nani-s3-t15",
+          "text": "Establecer revisión financiera mensual",
+          "done": false
+        },
+        {
+          "id": "id-mvmeumd3-j4tesxb",
+          "text": "Checar mi historial crediticio en el buco de credito",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "nani-s4",
+      "title": "Preparación laboral",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "nani-s4-t0",
+          "text": "Investigar salarios de puestos de entrada",
+          "done": false
+        },
+        {
+          "id": "nani-s4-t2",
+          "text": "Conocer prestaciones y derechos laborales",
+          "done": false
+        },
+        {
+          "id": "nani-s4-t3",
+          "text": "Aprender a revisar contratos laborales",
+          "done": false
+        },
+        {
+          "id": "nani-s4-t4",
+          "text": "Preparar documentos para contratación",
+          "done": false
+        },
+        {
+          "id": "nani-s4-t5",
+          "text": "Practicar entrevistas laborales",
+          "done": false
+        },
+        {
+          "id": "nani-s4-t6",
+          "text": "Aprender a leer recibos de nómina",
+          "done": false
+        },
+        {
+          "id": "nani-s4-t7",
+          "text": "Conocer derechos ante renuncia o despido",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "nani-s5",
+      "title": "Primer sueldo y primeros empleos",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "nani-s5-t0",
+          "text": "Verificar alta y cotizaciones en IMSS",
+          "done": false
+        },
+        {
+          "id": "nani-s5-t1",
+          "text": "Revisar aportaciones AFORE e INFONAVIT",
+          "done": false
+        },
+        {
+          "id": "nani-s5-t2",
+          "text": "Crear fondo de emergencia",
+          "done": false
+        },
+        {
+          "id": "nani-s5-t3",
+          "text": "Automatizar ahorro mensual",
+          "done": false
+        },
+        {
+          "id": "nani-s5-t4",
+          "text": "Definir aportaciones periódicas a inversiones",
+          "done": false
+        },
+        {
+          "id": "nani-s5-t5",
+          "text": "Crear apartados para viajes y compras importantes",
+          "done": false
+        },
+        {
+          "id": "nani-s5-t6",
+          "text": "Evaluar tarjeta de crédito",
+          "done": false
+        },
+        {
+          "id": "nani-s5-t7",
+          "text": "Pagar el total de la tarjeta puntualmente",
+          "done": false
+        },
+        {
+          "id": "nani-s5-t8",
+          "text": "Registrar y controlar deudas",
+          "done": false
+        },
+        {
+          "id": "nani-s5-t9",
+          "text": "Revisar retenciones y obligaciones fiscales",
+          "done": false
+        },
+        {
+          "id": "nani-s5-t10",
+          "text": "Evaluar seguro médico y coberturas",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "nani-s6",
+      "title": "Patrimonio y futuro financiero",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "nani-s6-t0",
+          "text": "Definir estrategia de inversión a largo plazo",
+          "done": false
+        },
+        {
+          "id": "nani-s6-t1",
+          "text": "Entender comisiones e impuestos de inversiones",
+          "done": false
+        },
+        {
+          "id": "nani-s6-t2",
+          "text": "Comparar AFORE por rendimientos y comisiones",
+          "done": false
+        },
+        {
+          "id": "nani-s6-t3",
+          "text": "Evaluar ahorro voluntario para retiro y PPR",
+          "done": false
+        },
+        {
+          "id": "nani-s6-t4",
+          "text": "Crear metas financieras a 1, 3 y 5 años",
+          "done": false
+        },
+        {
+          "id": "nani-s6-t5",
+          "text": "Calcular presupuesto para independizarme",
+          "done": false
+        },
+        {
+          "id": "nani-s6-t6",
+          "text": "Aprender a revisar contratos de renta",
+          "done": false
+        },
+        {
+          "id": "nani-s6-t7",
+          "text": "Entender trámites y seguros de automóvil (si aplica)",
+          "done": false
+        },
+        {
+          "id": "nani-s6-t8",
+          "text": "Revisar patrimonio trimestralmente",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "nani-s7",
+      "title": "Habilidades para la vida adulta",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "nani-s7-t0",
+          "text": "Organizar historial médico y vacunas",
+          "done": false
+        },
+        {
+          "id": "nani-s7-t1",
+          "text": "Aprender primeros auxilios y RCP",
+          "done": false
+        },
+        {
+          "id": "nani-s7-t2",
+          "text": "Aprender a manejar y cambiar una llanta",
+          "done": false
+        },
+        {
+          "id": "nani-s7-t3",
+          "text": "Identificar fraudes digitales y financieros",
+          "done": false
+        },
+        {
+          "id": "nani-s7-t4",
+          "text": "Conocer cómo hacer aclaraciones bancarias",
+          "done": false
+        },
+        {
+          "id": "nani-s7-t5",
+          "text": "Mantener calendario de citas, pagos y trámites",
+          "done": false
+        },
+        {
+          "id": "nani-s7-t6",
+          "text": "Hacer revisión anual de documentos y objetivos",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "nani-notes",
+      "title": "Notas y pendientes",
+      "type": "notes",
+      "tasks": [
+        {
+          "id": "nani-notes-t0",
+          "text": "Ver qué pasó con mi certificado Cambridge C1 Advanced y cómo recuperarlo",
+          "done": false
+        },
+        {
+          "id": "nani-notes-t1",
+          "text": "Revisar RFC, contraseña y acceso al portal del SAT",
+          "done": false
+        },
+        {
+          "id": "nani-notes-t2",
+          "text": "Revisar cuenta y acceso a Llave CDMX",
+          "done": false
+        },
+        {
+          "id": "id-mvmdb2dh-onatwyn",
+          "text": "Sacar certificado de Aleman u otro idioma.",
+          "done": false
+        }
+      ]
+    }
+  ],
+  "maria": [
+    {
+      "id": "maria-s0",
+      "title": "Vida digital y organización",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "maria-s0-t0",
+          "text": "Crear correo electrónico profesional",
+          "done": false
+        },
+        {
+          "id": "maria-s0-t1",
+          "text": "Limpiar correos antiguos",
+          "done": false
+        },
+        {
+          "id": "maria-s0-t2",
+          "text": "Cancelar suscripciones de correos innecesarias",
+          "done": false
+        },
+        {
+          "id": "maria-s0-t3",
+          "text": "Actualizar teléfonos y correos de recuperación",
+          "done": false
+        },
+        {
+          "id": "maria-s0-t4",
+          "text": "Arreglar gestión de passwords",
+          "done": false
+        },
+        {
+          "id": "maria-s0-t5",
+          "text": "Crear calendario personal de pendientes y vencimientos",
+          "done": false
+        },
+        {
+          "id": "maria-s0-t6",
+          "text": "Respaldar archivos importantes",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "maria-s1",
+      "title": "Carpeta de documentos importantes",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "maria-s1-t0",
+          "text": "Crear carpeta digital organizada de documentos importantes",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t1",
+          "text": "CURP certificada",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t2",
+          "text": "Acta de nacimiento",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t3",
+          "text": "INE por ambos lados",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t4",
+          "text": "Pasaporte mexicano",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t5",
+          "text": "Licencia de conducir (si aplica)",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t6",
+          "text": "Constancia de Situación Fiscal (RFC)",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t7",
+          "text": "Número de Seguridad Social (NSS)",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t8",
+          "text": "Cartilla de vacunación",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t9",
+          "text": "Certificado de primaria",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t10",
+          "text": "Certificado de secundaria",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t11",
+          "text": "Certificado de preparatoria",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t12",
+          "text": "Constancia de estudios universitarios",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t13",
+          "text": "Historial académico universitario",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t14",
+          "text": "Título universitario y cédula profesional (cuando corresponda)",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t15",
+          "text": "Certificado oficial de inglés",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t16",
+          "text": "Otros certificados de idiomas",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t17",
+          "text": "Diplomas, cursos y reconocimientos",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t18",
+          "text": "Currículum actualizado",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t19",
+          "text": "Constancias laborales y de prácticas",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t20",
+          "text": "Cartas de recomendación",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t21",
+          "text": "Contratos laborales y recibos de nómina",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t22",
+          "text": "Documentos bancarios y CLABE",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t23",
+          "text": "Contratos y estados de cuenta de inversiones",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t24",
+          "text": "Constancia o estado de cuenta AFORE",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t25",
+          "text": "Reporte de semanas cotizadas IMSS",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t26",
+          "text": "Documentos fiscales y declaraciones (si aplica)",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t27",
+          "text": "Pólizas de seguros",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t28",
+          "text": "Información médica importante y alergias",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t29",
+          "text": "Contactos de emergencia",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t30",
+          "text": "Visas y permisos migratorios (si aplica)",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t31",
+          "text": "Documentos de intercambio académico (si aplica)",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t32",
+          "text": "Contratos y garantías importantes (si aplica)",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t33",
+          "text": "Guardar originales físicos",
+          "done": false
+        },
+        {
+          "id": "maria-s1-t34",
+          "text": "Crear respaldo cifrado de documentos",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "maria-career",
+      "title": "Desarrollo profesional",
+      "type": "career",
+      "tasks": [
+        {
+          "id": "maria-career-t0",
+          "text": "Crear o actualizar CV audiovisual",
+          "done": false
+        },
+        {
+          "id": "maria-career-t1",
+          "text": "Actualizar LinkedIn y perfiles profesionales",
+          "done": false
+        },
+        {
+          "id": "maria-career-t2",
+          "text": "Tomarse fotografías profesionales",
+          "done": false
+        },
+        {
+          "id": "maria-career-t3",
+          "text": "Seleccionar mejores cortometrajes y proyectos",
+          "done": false
+        },
+        {
+          "id": "maria-career-t4",
+          "text": "Crear showreel audiovisual",
+          "done": false
+        },
+        {
+          "id": "maria-career-t5",
+          "text": "Organizar portafolio cinematográfico",
+          "done": false
+        },
+        {
+          "id": "maria-career-t6",
+          "text": "Registrar créditos y responsabilidades de producciones",
+          "done": false
+        },
+        {
+          "id": "maria-career-t7",
+          "text": "Organizar guiones y proyectos propios",
+          "done": false
+        },
+        {
+          "id": "maria-career-t8",
+          "text": "Crear perfil IMDb cuando tenga créditos elegibles",
+          "done": false
+        },
+        {
+          "id": "maria-career-t9",
+          "text": "Organizar certificados y reconocimientos",
+          "done": false
+        },
+        {
+          "id": "maria-career-t10",
+          "text": "Definir especialidad dentro del cine",
+          "done": false
+        },
+        {
+          "id": "maria-career-t11",
+          "text": "Elegir curso de especialización audiovisual",
+          "done": false
+        },
+        {
+          "id": "maria-career-t12",
+          "text": "Practicar entrevistas y presentaciones de proyectos",
+          "done": false
+        },
+        {
+          "id": "maria-career-t13",
+          "text": "Investigar productoras y puestos de entrada",
+          "done": false
+        },
+        {
+          "id": "maria-career-t14",
+          "text": "Buscar prácticas y experiencia en rodajes",
+          "done": false
+        },
+        {
+          "id": "maria-career-t15",
+          "text": "Construir contactos en la industria",
+          "done": false
+        },
+        {
+          "id": "maria-career-t16",
+          "text": "Investigar festivales, convocatorias y fondos",
+          "done": false
+        },
+        {
+          "id": "maria-career-t17",
+          "text": "Crear plan de carrera audiovisual",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "maria-s2",
+      "title": "Trámites mexicanos",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "maria-s2-t0",
+          "text": "Verificar RFC y régimen fiscal en SAT",
+          "done": false
+        },
+        {
+          "id": "maria-s2-t1",
+          "text": "Revisar acceso al portal del SAT",
+          "done": false
+        },
+        {
+          "id": "maria-s2-t2",
+          "text": "Revisar si necesito e.firma",
+          "done": false
+        },
+        {
+          "id": "maria-s2-t3",
+          "text": "Consultar vigencia de derechos IMSS",
+          "done": false
+        },
+        {
+          "id": "maria-s2-t4",
+          "text": "Consultar semanas cotizadas IMSS",
+          "done": false
+        },
+        {
+          "id": "maria-s2-t5",
+          "text": "Localizar AFORE y verificar datos",
+          "done": false
+        },
+        {
+          "id": "maria-s2-t6",
+          "text": "Revisar beneficiarios de cuentas y AFORE",
+          "done": false
+        },
+        {
+          "id": "maria-s2-t7",
+          "text": "Consultar Reporte de Crédito Especial",
+          "done": false
+        },
+        {
+          "id": "maria-s2-t8",
+          "text": "Revisar vencimiento de documentos oficiales",
+          "done": false
+        },
+        {
+          "id": "maria-s2-t9",
+          "text": "Entender obligaciones fiscales como trabajadora",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "maria-s3",
+      "title": "Finanzas personales",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "maria-s3-t0",
+          "text": "Inventario de cuentas bancarias",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t1",
+          "text": "Cerrar cuentas bancarias sin uso",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t2",
+          "text": "Registrar inversiones y saldos",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t3",
+          "text": "Revisar últimos tres meses de estados de cuenta",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t4",
+          "text": "Identificar suscripciones y gastos recurrentes",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t5",
+          "text": "Cancelar servicios innecesarios",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t6",
+          "text": "Crear Excel maestro de finanzas",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t7",
+          "text": "Registrar ingresos y gastos mensuales",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t8",
+          "text": "Clasificar gastos por categoría",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t9",
+          "text": "Crear presupuesto mensual",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t10",
+          "text": "Calcular patrimonio neto",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t11",
+          "text": "Crear calendario de pagos",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t12",
+          "text": "Definir metas de ahorro a 12 meses",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t13",
+          "text": "Separar gastos, ahorro e inversiones",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t14",
+          "text": "Organizar comprobantes financieros",
+          "done": false
+        },
+        {
+          "id": "maria-s3-t15",
+          "text": "Establecer revisión financiera mensual",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "maria-s4",
+      "title": "Preparación laboral",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "maria-s4-t0",
+          "text": "Investigar salarios de puestos de entrada",
+          "done": false
+        },
+        {
+          "id": "maria-s4-t1",
+          "text": "Entender sueldo bruto y neto",
+          "done": false
+        },
+        {
+          "id": "maria-s4-t2",
+          "text": "Conocer prestaciones y derechos laborales",
+          "done": false
+        },
+        {
+          "id": "maria-s4-t3",
+          "text": "Aprender a revisar contratos laborales",
+          "done": false
+        },
+        {
+          "id": "maria-s4-t4",
+          "text": "Preparar documentos para contratación",
+          "done": false
+        },
+        {
+          "id": "maria-s4-t5",
+          "text": "Practicar entrevistas laborales",
+          "done": false
+        },
+        {
+          "id": "maria-s4-t6",
+          "text": "Aprender a leer recibos de nómina",
+          "done": false
+        },
+        {
+          "id": "maria-s4-t7",
+          "text": "Conocer derechos ante renuncia o despido",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "maria-s5",
+      "title": "Primer sueldo y primeros empleos",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "maria-s5-t0",
+          "text": "Verificar alta y cotizaciones en IMSS",
+          "done": false
+        },
+        {
+          "id": "maria-s5-t1",
+          "text": "Revisar aportaciones AFORE e INFONAVIT",
+          "done": false
+        },
+        {
+          "id": "maria-s5-t2",
+          "text": "Crear fondo de emergencia",
+          "done": false
+        },
+        {
+          "id": "maria-s5-t3",
+          "text": "Automatizar ahorro mensual",
+          "done": false
+        },
+        {
+          "id": "maria-s5-t4",
+          "text": "Definir aportaciones periódicas a inversiones",
+          "done": false
+        },
+        {
+          "id": "maria-s5-t5",
+          "text": "Crear apartados para viajes y compras importantes",
+          "done": false
+        },
+        {
+          "id": "maria-s5-t6",
+          "text": "Evaluar tarjeta de crédito",
+          "done": false
+        },
+        {
+          "id": "maria-s5-t7",
+          "text": "Pagar el total de la tarjeta puntualmente",
+          "done": false
+        },
+        {
+          "id": "maria-s5-t8",
+          "text": "Registrar y controlar deudas",
+          "done": false
+        },
+        {
+          "id": "maria-s5-t9",
+          "text": "Revisar retenciones y obligaciones fiscales",
+          "done": false
+        },
+        {
+          "id": "maria-s5-t10",
+          "text": "Evaluar seguro médico y coberturas",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "maria-s6",
+      "title": "Patrimonio y futuro financiero",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "maria-s6-t0",
+          "text": "Definir estrategia de inversión a largo plazo",
+          "done": false
+        },
+        {
+          "id": "maria-s6-t1",
+          "text": "Entender comisiones e impuestos de inversiones",
+          "done": false
+        },
+        {
+          "id": "maria-s6-t2",
+          "text": "Comparar AFORE por rendimientos y comisiones",
+          "done": false
+        },
+        {
+          "id": "maria-s6-t3",
+          "text": "Evaluar ahorro voluntario para retiro y PPR",
+          "done": false
+        },
+        {
+          "id": "maria-s6-t4",
+          "text": "Crear metas financieras a 1, 3 y 5 años",
+          "done": false
+        },
+        {
+          "id": "maria-s6-t5",
+          "text": "Calcular presupuesto para independizarme",
+          "done": false
+        },
+        {
+          "id": "maria-s6-t6",
+          "text": "Aprender a revisar contratos de renta",
+          "done": false
+        },
+        {
+          "id": "maria-s6-t7",
+          "text": "Entender trámites y seguros de automóvil (si aplica)",
+          "done": false
+        },
+        {
+          "id": "maria-s6-t8",
+          "text": "Revisar patrimonio trimestralmente",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "maria-s7",
+      "title": "Habilidades para la vida adulta",
+      "type": "adult",
+      "tasks": [
+        {
+          "id": "maria-s7-t0",
+          "text": "Organizar historial médico y vacunas",
+          "done": false
+        },
+        {
+          "id": "maria-s7-t1",
+          "text": "Aprender primeros auxilios y RCP",
+          "done": false
+        },
+        {
+          "id": "maria-s7-t2",
+          "text": "Aprender a manejar y cambiar una llanta",
+          "done": false
+        },
+        {
+          "id": "maria-s7-t3",
+          "text": "Identificar fraudes digitales y financieros",
+          "done": false
+        },
+        {
+          "id": "maria-s7-t4",
+          "text": "Conocer cómo hacer aclaraciones bancarias",
+          "done": false
+        },
+        {
+          "id": "maria-s7-t5",
+          "text": "Mantener calendario de citas, pagos y trámites",
+          "done": false
+        },
+        {
+          "id": "maria-s7-t6",
+          "text": "Hacer revisión anual de documentos y objetivos",
+          "done": false
+        }
+      ]
+    },
+    {
+      "id": "maria-notes",
+      "title": "Notas y pendientes",
+      "type": "notes",
+      "tasks": []
+    }
+  ]
+}
