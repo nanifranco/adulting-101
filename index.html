@@ -1,5 +1,12 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#2f6b4f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Adultez 101">
 <title>Adultez 101</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap">
 <style>
@@ -7,30 +14,33 @@
 :root{
   --bg:#f3f5f2; --surface:#ffffff; --fg:#1d2420; --muted:#66706a; --line:#dde3de;
   --nani:#2f6b4f; --nani-soft:#e1efe6; --mari:#8a3f6b; --mari-soft:#f4e3ec;
-  --accent:var(--nani); --accent-soft:var(--nani-soft); --danger:#b3392f;
+  --accent:var(--nani); --accent-soft:var(--nani-soft); --danger:#b3392f; --ok:#3aa66a;
   --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
   --body:"Figtree",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+@media (prefers-color-scheme:dark){:root{
   --bg:#141917; --surface:#1c2320; --fg:#e7ece8; --muted:#97a29b; --line:#2c3531;
   --nani:#7cc59f; --nani-soft:#203a2d; --mari:#e39ac4; --mari-soft:#3d2533; --danger:#ef8a80; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#141917; --surface:#1c2320; --fg:#e7ece8; --muted:#97a29b; --line:#2c3531;
-  --nani:#7cc59f; --nani-soft:#203a2d; --mari:#e39ac4; --mari-soft:#3d2533; --danger:#ef8a80; color-scheme:dark}
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.45}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.45}
 body.mari{--accent:var(--mari);--accent-soft:var(--mari-soft)}
-.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px;display:flex;flex-direction:column;gap:16px}
+[hidden]{display:none!important}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-top:calc(20px + env(safe-area-inset-top,0px));padding-bottom:calc(48px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
 header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
-h1{font-family:var(--display);font-weight:800;font-size:2rem;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1{font-family:var(--display);font-weight:800;font-size:2rem;letter-spacing:-.02em;margin:0}
 h1 span{color:var(--accent)}
+h2{font-family:var(--display);font-weight:600;font-size:1.3rem;margin:0}
+p{margin:0}
 .sync{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:6px}
 .dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
-.sync.live .dot{background:#3aa66a}
+.sync.live .dot{background:var(--ok)}
 .sync.err .dot{background:var(--danger)}
 .switch{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px}
 .switch button{font:600 1rem var(--body);border:0;border-radius:10px;padding:10px;background:transparent;color:var(--muted);cursor:pointer}
 .switch button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
-.switch button:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .summary{background:var(--accent-soft);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
 .summary .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
 .big{font-family:var(--display);font-weight:800;font-size:2.4rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
@@ -55,7 +65,7 @@ details[open] .scount::after{transform:rotate(90deg)}
 ul{list-style:none;margin:0;padding:0 8px 8px}
 li{display:flex;align-items:flex-start;gap:12px;padding:10px 8px;border-top:1px solid var(--line)}
 li label{display:flex;gap:12px;align-items:flex-start;flex:1;min-width:0;cursor:pointer}
-li input[type=checkbox]{appearance:none;flex:none;width:22px;height:22px;border:2px solid var(--muted);border-radius:7px;margin:1px 0 0;display:grid;place-items:center;cursor:pointer;background:var(--surface)}
+li input[type=checkbox]{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;border:2px solid var(--muted);border-radius:7px;margin:1px 0 0;display:grid;place-items:center;cursor:pointer;background:var(--surface)}
 li input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
 li input[type=checkbox]:checked::after{content:"";width:6px;height:11px;border:solid var(--surface);border-width:0 2.5px 2.5px 0;transform:translateY(-1px) rotate(45deg)}
 li .txt{overflow-wrap:anywhere}
@@ -64,217 +74,292 @@ li.done .txt{color:var(--muted);text-decoration:line-through}
 .del:hover{color:var(--danger)}
 .del.confirm{color:var(--surface);background:var(--danger);font-size:.75rem;font-weight:600;padding:5px 8px}
 form.add{display:flex;gap:8px;padding:10px 8px 6px;border-top:1px solid var(--line)}
-form.add input{flex:1;min-width:0;font:inherit;font-size:.95rem;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg)}
-.btn{font:600 .9rem var(--body);border:0;border-radius:10px;padding:9px 14px;background:var(--accent);color:var(--surface);cursor:pointer}
+input[type=text]{flex:1;min-width:0;font:inherit;font-size:16px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg)}
+.btn{font:600 .95rem var(--body);border:0;border-radius:10px;padding:10px 16px;background:var(--accent);color:var(--surface);cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
 .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.btn:disabled{opacity:.6}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.card .row{display:flex;gap:8px;flex-wrap:wrap}
+.linkbox{font:500 .85rem ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow-wrap:anywhere;user-select:all}
 .empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:24px;text-align:center;color:var(--muted)}
 .tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding-top:8px}
-.tools .note{width:100%;text-align:center;font-size:.8rem;color:var(--muted)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;max-width:calc(100% - 32px)}
-.ro .del,.ro form.add{display:none}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;max-width:calc(100% - 32px);z-index:5}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
-
-<div class="wrap" id="app">
+</head>
+<body>
+<div class="wrap">
   <header>
     <h1>Adultez <span>101</span></h1>
     <div class="sync" id="sync"><span class="dot"></span><span id="syncTxt">Conectando…</span></div>
   </header>
 
-  <div class="switch" role="group" aria-label="De quién es la lista">
-    <button id="tab-nani" data-p="nani" aria-pressed="true">Nani</button>
-    <button id="tab-maria" data-p="maria" aria-pressed="false">Mari</button>
-  </div>
-
-  <section class="summary" aria-live="polite">
+  <!-- Primera vez: crear la lista compartida -->
+  <section class="card" id="setup" hidden>
+    <h2>Crear la lista compartida</h2>
+    <p>Esto se hace una sola vez. Se crea la lista con todas sus tareas y te da un link para mandarle a Mari.</p>
     <div class="row">
-      <div class="big" id="pct">0%</div>
-      <div class="small" id="cnt">0 de 0 listos</div>
+      <button class="btn" id="createBtn">Crear lista</button>
     </div>
-    <div class="bar"><i id="barFill" style="width:0%"></i></div>
-    <div class="small" id="other"></div>
+    <p class="small">¿Ya tienes el link de la lista? Ábrelo y listo.</p>
   </section>
 
-  <div class="filter" role="group" aria-label="Filtro">
-    <button id="f-all" data-f="all" aria-pressed="true">Todo</button>
-    <button id="f-todo" data-f="todo" aria-pressed="false">Pendientes</button>
-    <button id="f-done" data-f="done" aria-pressed="false">Hechos</button>
-  </div>
+  <!-- Compartir -->
+  <section class="card" id="share" hidden>
+    <h2>Link para Mari</h2>
+    <p>Mándale este link. Las dos verán la misma lista y los cambios aparecen en unos segundos.</p>
+    <div class="linkbox" id="shareLink"></div>
+    <div class="row">
+      <button class="btn" id="copyBtn">Copiar link</button>
+      <button class="btn ghost" id="shareNative" hidden>Compartir…</button>
+      <button class="btn ghost" id="closeShare">Cerrar</button>
+    </div>
+  </section>
 
-  <div class="sections" id="sections">
-    <div class="empty">Cargando la lista…</div>
-  </div>
+  <div id="main" hidden>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div class="switch" role="group" aria-label="De quién es la lista">
+        <button data-p="nani" aria-pressed="true">Nani</button>
+        <button data-p="maria" aria-pressed="false">Mari</button>
+      </div>
 
-  <div class="tools">
-    <button class="btn ghost" id="exportBtn" hidden>Descargar respaldo</button>
-    <button class="btn ghost" id="importBtn" hidden>Restaurar desde respaldo</button>
-    <input type="file" id="importFile" accept=".json,application/json" hidden>
-    <p class="note" id="roNote" hidden>Solo puedes ver esta lista. Pide acceso de Editor para marcar tareas.</p>
+      <section class="summary" aria-live="polite">
+        <div class="row">
+          <div class="big" id="pct">0%</div>
+          <div class="small" id="cnt">0 de 0 listos</div>
+        </div>
+        <div class="bar"><i id="barFill" style="width:0%"></i></div>
+        <div class="small" id="other"></div>
+      </section>
+
+      <div class="filter" role="group" aria-label="Filtro">
+        <button data-f="all" aria-pressed="true">Todo</button>
+        <button data-f="todo" aria-pressed="false">Pendientes</button>
+        <button data-f="done" aria-pressed="false">Hechos</button>
+      </div>
+
+      <div class="sections" id="sections"><div class="empty">Cargando la lista…</div></div>
+
+      <div class="tools">
+        <button class="btn ghost" id="openShare">Link para compartir</button>
+        <button class="btn ghost" id="exportBtn">Descargar respaldo</button>
+        <button class="btn ghost" id="importBtn">Restaurar respaldo</button>
+        <input type="file" id="importFile" accept=".json,application/json" hidden>
+      </div>
+    </div>
   </div>
 </div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
-const $ = s => document.querySelector(s);
-const state = { person: "nani", filter: "all", sections: [], open: {}, canWrite: true, confirmDel: null };
+// La lista vive en jsonblob.com (gratis, sin cuentas). El código de la lista va en el link (#...).
+const API = "https://jsonblob.com/api/jsonBlob";
+const POLL_MS = 5000;
 const TAGS = { career: "Carrera", notes: "Notas" };
-let db = null, col = null;
+const $ = s => document.querySelector(s);
 
-try { const p = localStorage.getItem("a101-person"); if (p === "nani" || p === "maria") state.person = p; } catch (e) {}
-try { state.open = JSON.parse(localStorage.getItem("a101-open") || "{}") || {}; } catch (e) {}
+const state = { id: null, data: null, person: "nani", filter: "all", open: {}, confirmDel: null, busy: false };
 
-function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,2600); }
-function setSync(cls, txt){ const s=$("#sync"); s.className="sync "+cls; $("#syncTxt").textContent=txt; }
+function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,2800); }
+function setSync(cls, txt){ $("#sync").className="sync "+cls; $("#syncTxt").textContent=txt; }
 function uid(){ return "id-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8); }
+function shareUrl(){ return location.origin + location.pathname + "#" + state.id; }
 
-function stats(person){
+const p = lsGet("a101-person"); if (p==="nani"||p==="maria") state.person=p;
+try { state.open = JSON.parse(lsGet("a101-open")||"{}")||{}; } catch(e){}
+
+// ---------- servidor ----------
+async function fetchList(){
+  const r = await fetch(API+"/"+state.id, { headers:{Accept:"application/json"}, cache:"no-store" });
+  if (r.status===404) throw Object.assign(new Error("nf"),{code:"notfound"});
+  if (!r.ok) throw new Error("http "+r.status);
+  return r.json();
+}
+async function saveList(data){
+  const r = await fetch(API+"/"+state.id, { method:"PUT", headers:{"Content-Type":"application/json",Accept:"application/json"}, body:JSON.stringify(data) });
+  if (!r.ok) throw new Error("http "+r.status);
+}
+async function createList(data){
+  const r = await fetch(API, { method:"POST", headers:{"Content-Type":"application/json",Accept:"application/json"}, body:JSON.stringify(data) });
+  if (!r.ok) throw new Error("http "+r.status);
+  const loc = r.headers.get("Location") || r.headers.get("location") || "";
+  const id = r.headers.get("X-jsonblob-id") || r.headers.get("x-jsonblob") || loc.split("/").pop();
+  if (!id) throw new Error("sin id");
+  return id;
+}
+
+// Cambios: se lee la versión más nueva, se aplica el cambio y se guarda. Así no se pisan los cambios de la otra persona.
+let chain = Promise.resolve();
+function change(apply){
+  apply(state.data); render(); // se ve al instante
+  chain = chain.then(async ()=>{
+    state.busy = true;
+    try {
+      const fresh = await fetchList();
+      apply(fresh);
+      await saveList(fresh);
+      state.data = fresh; setSync("live","En vivo");
+    } catch(e){
+      setSync("err","Sin conexión"); toast("No se guardó el cambio. Revisa tu internet e inténtalo otra vez.");
+    } finally { state.busy=false; render(); }
+  });
+}
+function findSection(data, owner, sid){ return (data[owner]||[]).find(s=>s.id===sid); }
+const ops = {
+  toggle:(owner,sid,tid,done)=>d=>{ const s=findSection(d,owner,sid); const t=s&&s.tasks.find(t=>t.id===tid); if(t) t.done=done; },
+  add:(owner,sid,task)=>d=>{ const s=findSection(d,owner,sid); if(s && !s.tasks.some(t=>t.id===task.id)) s.tasks.push({...task}); },
+  del:(owner,sid,tid)=>d=>{ const s=findSection(d,owner,sid); if(s) s.tasks=s.tasks.filter(t=>t.id!==tid); },
+};
+
+async function poll(){
+  if (!state.id || state.busy || document.hidden) return;
+  try {
+    const fresh = await fetchList();
+    if (state.busy) return;
+    if (JSON.stringify(fresh)!==JSON.stringify(state.data)){ state.data=fresh; render(); }
+    setSync("live","En vivo");
+  } catch(e){
+    if (e.code==="notfound"){ setSync("err","No se encontró la lista"); }
+    else setSync("err","Sin conexión");
+  }
+}
+
+// ---------- pantalla ----------
+function stats(owner){
   let total=0, done=0;
-  for (const s of state.sections) if (s.owner===person) for (const t of s.tasks){ total++; if (t.done) done++; }
-  return { total, done, pct: total ? Math.round(done/total*100) : 0 };
+  for (const s of (state.data?.[owner]||[])) for (const t of s.tasks){ total++; if(t.done) done++; }
+  return { total, done, pct: total?Math.round(done/total*100):0 };
 }
 
 function render(){
+  if (!state.data) return;
   document.body.classList.toggle("mari", state.person==="maria");
-  document.body.classList.toggle("ro", !state.canWrite);
+  document.querySelector('meta[name="theme-color"]').content = getComputedStyle(document.body).getPropertyValue("--accent").trim() || "#2f6b4f";
   for (const b of document.querySelectorAll(".switch button")) b.setAttribute("aria-pressed", b.dataset.p===state.person);
   for (const b of document.querySelectorAll(".filter button")) b.setAttribute("aria-pressed", b.dataset.f===state.filter);
 
-  const me = stats(state.person), otherKey = state.person==="nani" ? "maria" : "nani", ot = stats(otherKey);
-  $("#pct").textContent = me.pct+"%";
-  $("#cnt").textContent = me.done+" de "+me.total+" listos";
-  $("#barFill").style.width = me.pct+"%";
-  $("#other").textContent = ot.total ? (otherKey==="nani"?"Nani":"Mari")+" va en "+ot.pct+"% ("+ot.done+" de "+ot.total+")" : "";
+  const me=stats(state.person), ok=state.person==="nani"?"maria":"nani", ot=stats(ok);
+  $("#pct").textContent=me.pct+"%";
+  $("#cnt").textContent=me.done+" de "+me.total+" listos";
+  $("#barFill").style.width=me.pct+"%";
+  $("#other").textContent = ot.total ? (ok==="nani"?"Nani":"Mari")+" va en "+ot.pct+"% ("+ot.done+" de "+ot.total+")" : "";
 
-  const box = $("#sections");
-  const mine = state.sections.filter(s=>s.owner===state.person).sort((a,b)=>(a.order??0)-(b.order??0));
-  if (!state.sections.length){ box.innerHTML='<div class="empty">'+(db?"Todavía no hay tareas. Usa “Restaurar desde respaldo” para cargar tu archivo .json.":"Cargando la lista…")+'</div>'; return; }
-  if (!mine.length){ box.innerHTML='<div class="empty">Esta lista está vacía.</div>'; return; }
-
+  const box=$("#sections"), owner=state.person, list=state.data[owner]||[];
+  // conservar lo que se está escribiendo
+  const drafts={}; let focusId=document.activeElement?.id;
+  box.querySelectorAll("form.add input").forEach(i=>{ if(i.value) drafts[i.id]=i.value; });
   box.textContent="";
-  for (const s of mine){
-    const done = s.tasks.filter(t=>t.done).length, total=s.tasks.length;
-    const d = document.createElement("details");
-    d.dataset.id = s.id;
-    if (state.open[s.id]) d.open = true;
-    d.addEventListener("toggle", ()=>{ state.open[s.id]=d.open; try{localStorage.setItem("a101-open",JSON.stringify(state.open));}catch(e){} });
+  if (!list.length){ box.innerHTML='<div class="empty">Esta lista está vacía.</div>'; return; }
 
-    const sum = document.createElement("summary");
-    const head = document.createElement("div"); head.className="shead";
-    const title = document.createElement("div"); title.className="stitle";
+  for (const s of list){
+    const done=s.tasks.filter(t=>t.done).length, total=s.tasks.length;
+    const d=document.createElement("details");
+    const okey=owner+"/"+s.id;
+    if (state.open[okey]) d.open=true;
+    d.addEventListener("toggle",()=>{ state.open[okey]=d.open; lsSet("a101-open",JSON.stringify(state.open)); });
+
+    const sum=document.createElement("summary");
+    const head=document.createElement("div"); head.className="shead";
+    const title=document.createElement("div"); title.className="stitle";
     if (TAGS[s.type]){ const tg=document.createElement("span"); tg.className="tag"; tg.textContent=TAGS[s.type]; title.append(tg); }
     title.append(document.createTextNode(s.title));
-    const c = document.createElement("div"); c.className="scount"; c.textContent = done+"/"+total;
+    const c=document.createElement("div"); c.className="scount"; c.textContent=done+"/"+total;
     head.append(title,c);
-    const sb = document.createElement("div"); sb.className="sbar"; sb.innerHTML='<i style="width:'+(total?done/total*100:0)+'%"></i>';
+    const sb=document.createElement("div"); sb.className="sbar"; sb.innerHTML='<i style="width:'+(total?done/total*100:0)+'%"></i>';
     sum.append(head,sb); d.append(sum);
 
-    const ul = document.createElement("ul");
+    const ul=document.createElement("ul");
     for (const t of s.tasks){
-      if (state.filter==="todo" && t.done) continue;
-      if (state.filter==="done" && !t.done) continue;
-      const li = document.createElement("li"); if (t.done) li.className="done";
-      const lab = document.createElement("label");
-      const cb = document.createElement("input"); cb.type="checkbox"; cb.checked=!!t.done; cb.id="cb-"+t.id; cb.disabled=!state.canWrite;
-      cb.addEventListener("change", ()=>toggleTask(s.id, t.id, cb.checked));
-      const sp = document.createElement("span"); sp.className="txt"; sp.textContent=t.text;
+      if (state.filter==="todo"&&t.done) continue;
+      if (state.filter==="done"&&!t.done) continue;
+      const li=document.createElement("li"); if(t.done) li.className="done";
+      const lab=document.createElement("label");
+      const cb=document.createElement("input"); cb.type="checkbox"; cb.checked=!!t.done;
+      cb.addEventListener("change",()=>change(ops.toggle(owner,s.id,t.id,cb.checked)));
+      const sp=document.createElement("span"); sp.className="txt"; sp.textContent=t.text;
       lab.append(cb,sp); li.append(lab);
-      const del = document.createElement("button"); del.type="button"; del.className="del"; del.setAttribute("aria-label","Borrar tarea");
-      const key = s.id+"|"+t.id;
+      const del=document.createElement("button"); del.type="button"; del.className="del"; del.setAttribute("aria-label","Borrar tarea");
+      const key=owner+"|"+s.id+"|"+t.id;
       if (state.confirmDel===key){ del.classList.add("confirm"); del.textContent="¿Borrar?"; } else del.textContent="×";
-      del.addEventListener("click", ()=>{
-        if (state.confirmDel===key){ state.confirmDel=null; deleteTask(s.id,t.id); }
+      del.addEventListener("click",()=>{
+        if (state.confirmDel===key){ state.confirmDel=null; change(ops.del(owner,s.id,t.id)); toast("Tarea borrada"); }
         else { state.confirmDel=key; render(); clearTimeout(render.cd); render.cd=setTimeout(()=>{ if(state.confirmDel===key){state.confirmDel=null;render();} },4000); }
       });
       li.append(del); ul.append(li);
     }
     d.append(ul);
 
-    const f = document.createElement("form"); f.className="add";
-    const inp = document.createElement("input"); inp.id="add-"+s.id; inp.placeholder="Agregar tarea…"; inp.setAttribute("aria-label","Nueva tarea en "+s.title);
-    const btn = document.createElement("button"); btn.className="btn"; btn.textContent="Agregar";
+    const f=document.createElement("form"); f.className="add";
+    const inp=document.createElement("input"); inp.type="text"; inp.id="add-"+owner+"-"+s.id; inp.placeholder="Agregar tarea…"; inp.setAttribute("aria-label","Nueva tarea en "+s.title);
+    if (drafts[inp.id]) inp.value=drafts[inp.id];
+    const btn=document.createElement("button"); btn.className="btn"; btn.textContent="Agregar";
     f.append(inp,btn);
-    f.addEventListener("submit", e=>{ e.preventDefault(); const v=inp.value.trim(); if(!v) return; inp.value=""; addTask(s.id,v); });
+    f.addEventListener("submit",e=>{ e.preventDefault(); const v=inp.value.trim(); if(!v) return; inp.value=""; change(ops.add(owner,s.id,{id:uid(),text:v,done:false})); setTimeout(()=>document.getElementById(inp.id)?.focus(),0); });
     d.append(f);
     box.append(d);
   }
+  if (focusId && focusId.startsWith("add-")) document.getElementById(focusId)?.focus();
 }
 
-// One write at a time per section document.
-const queues = {};
-function writeSection(id, mutate){
-  const run = async ()=>{
-    const s = state.sections.find(x=>x.id===id); if (!s) return;
-    const tasks = mutate(s.tasks.map(t=>({...t})));
-    s.tasks = tasks; render();
-    try { await col.doc(id).update({ tasks }); }
-    catch(e){
-      if (e && e.code==="invalid_argument"){ state.canWrite=false; render(); toast("No tienes permiso para editar esta lista."); }
-      else toast("No se guardó el cambio. Revisa tu conexión e inténtalo otra vez.");
-    }
-  };
-  queues[id] = (queues[id]||Promise.resolve()).then(run, run);
-}
-function toggleTask(sid, tid, done){ writeSection(sid, ts=>ts.map(t=>t.id===tid?{...t,done}:t)); }
-function deleteTask(sid, tid){ writeSection(sid, ts=>ts.filter(t=>t.id!==tid)); toast("Tarea borrada"); }
-function addTask(sid, text){ writeSection(sid, ts=>[...ts,{id:uid(),text,done:false}]); }
+function showShare(){ $("#shareLink").textContent=shareUrl(); $("#share").hidden=false; $("#shareNative").hidden=!navigator.share; $("#share").scrollIntoView({behavior:"smooth"}); }
 
-function toBackup(){
-  const out = { nani: [], maria: [] };
-  for (const s of [...state.sections].sort((a,b)=>(a.order??0)-(b.order??0)))
-    (out[s.owner] ||= []).push({ id:s.id, title:s.title, type:s.type, tasks:s.tasks });
-  return out;
-}
-
-async function importBackup(file){
-  let data;
-  try { data = JSON.parse(await file.text()); } catch(e){ toast("Ese archivo no es un respaldo válido (.json)."); return; }
-  if (!data || (!Array.isArray(data.nani) && !Array.isArray(data.maria))){ toast("El archivo no tiene listas de Nani o Mari."); return; }
-  let n=0;
-  try{
-    for (const owner of ["nani","maria"]){
-      const list = data[owner]||[];
-      for (let i=0;i<list.length;i++){
-        const s=list[i]; const id = String(s.id||uid()).replace(/[^A-Za-z0-9_\-.~:@+]/g,"-");
-        await col.doc(id).set({ owner, order:i, title:String(s.title||"Sin título"), type:String(s.type||"adult"),
-          tasks:(s.tasks||[]).map(t=>({id:String(t.id||uid()),text:String(t.text||""),done:!!t.done})) });
-        n++;
-      }
-    }
-    toast("Respaldo restaurado ("+n+" secciones)");
-  } catch(e){ toast("No se pudo restaurar el respaldo. Inténtalo otra vez."); }
-}
-
-for (const b of document.querySelectorAll(".switch button")) b.addEventListener("click", ()=>{
-  state.person=b.dataset.p; try{localStorage.setItem("a101-person",state.person);}catch(e){} render();
-});
-for (const b of document.querySelectorAll(".filter button")) b.addEventListener("click", ()=>{ state.filter=b.dataset.f; render(); });
-$("#importBtn").addEventListener("click", ()=>$("#importFile").click());
-$("#importFile").addEventListener("change", e=>{ const f=e.target.files[0]; e.target.value=""; if(f) importBackup(f); });
-
-render();
-
-(async ()=>{
-  db = await window.claude?.use?.("db");
-  if (!db){ setSync("err","Sin conexión a la lista"); $("#sections").innerHTML='<div class="empty">Abre esta página desde claude.ai con tu cuenta para ver y editar la lista.</div>'; return; }
-  col = db.collection("sections");
-  const user = await window.claude.use("user");
-  const cw = user ? await user.can("data.write") : null;
-  if (cw === false){ state.canWrite=false; $("#roNote").hidden=false; }
-  else { $("#importBtn").hidden=false; }
-  col.onSnapshot(snap=>{
-    state.sections = snap.docs.map(d=>({ id:d.id, ...d.data(), tasks:[...((d.data().tasks)||[])].map(t=>({...t})) }));
-    setSync("live", snap.metadata.fromCache ? "Sincronizando…" : "En vivo");
-    render();
-  }, err=>{ setSync("err","Se perdió la conexión. Recarga la página."); });
-
-  const dl = await window.claude.use("downloads");
-  if (dl){
-    const eb=$("#exportBtn"); eb.hidden=false;
-    eb.addEventListener("click", async ()=>{
-      const d = new Date().toISOString().slice(0,10);
-      try { await dl.save({ filename:"adultez101-respaldo-"+d+".json", data: JSON.stringify(toBackup(),null,2) }); }
-      catch(e){ if (e && e.code!=="declined") toast("No se pudo descargar el respaldo."); }
-    });
+async function start(){
+  $("#setup").hidden=true; $("#main").hidden=false;
+  if (location.hash.slice(1)!==state.id) history.replaceState(null,"","#"+state.id);
+  try { state.data=await fetchList(); setSync("live","En vivo"); render(); }
+  catch(e){
+    $("#sections").innerHTML='<div class="empty">'+(e.code==="notfound"?"No se encontró esta lista. Revisa que el link esté completo.":"No hay conexión. Se volverá a intentar en unos segundos.")+'</div>';
+    setSync("err", e.code==="notfound"?"No se encontró la lista":"Sin conexión");
   }
-})();
+  setInterval(()=>{ if(!state.data) fetchList().then(d=>{state.data=d;render();}).catch(()=>{}); else poll(); }, POLL_MS);
+  document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) poll(); });
+}
+
+// ---------- botones ----------
+document.querySelectorAll(".switch button").forEach(b=>b.addEventListener("click",()=>{ state.person=b.dataset.p; lsSet("a101-person",state.person); render(); }));
+document.querySelectorAll(".filter button").forEach(b=>b.addEventListener("click",()=>{ state.filter=b.dataset.f; render(); }));
+
+$("#createBtn").addEventListener("click", async ()=>{
+  const b=$("#createBtn"); b.disabled=true; b.textContent="Creando…";
+  try {
+    const seed = await (await fetch("adultez101-respaldo.json",{cache:"no-store"})).json();
+    state.id = await createList(seed);
+    lsSet("a101-id", state.id);
+    await start(); showShare();
+  } catch(e){ toast("No se pudo crear la lista. Revisa tu internet e inténtalo otra vez."); b.disabled=false; b.textContent="Crear lista"; }
+});
+$("#openShare").addEventListener("click", showShare);
+$("#closeShare").addEventListener("click", ()=>$("#share").hidden=true);
+$("#copyBtn").addEventListener("click", async ()=>{
+  try { await navigator.clipboard.writeText(shareUrl()); toast("Link copiado"); }
+  catch(e){ const r=document.createRange(); r.selectNodeContents($("#shareLink")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast("Selecciona y copia el link"); }
+});
+$("#shareNative").addEventListener("click", ()=>navigator.share({ title:"Adultez 101", text:"Nuestra lista de Adultez 101", url:shareUrl() }).catch(()=>{}));
+
+$("#exportBtn").addEventListener("click", ()=>{
+  if (!state.data) return;
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(new Blob([JSON.stringify(state.data,null,2)],{type:"application/json"}));
+  a.download="adultez101-respaldo-"+new Date().toISOString().slice(0,10)+".json";
+  document.body.append(a); a.click(); a.remove();
+});
+$("#importBtn").addEventListener("click", ()=>$("#importFile").click());
+$("#importFile").addEventListener("change", async e=>{
+  const f=e.target.files[0]; e.target.value=""; if(!f) return;
+  let d; try { d=JSON.parse(await f.text()); } catch(err){ toast("Ese archivo no es un respaldo válido."); return; }
+  if (!d || (!Array.isArray(d.nani)&&!Array.isArray(d.maria))){ toast("El archivo no tiene listas de Nani o Mari."); return; }
+  d = { nani:d.nani||[], maria:d.maria||[] };
+  try { await chain; await saveList(d); state.data=d; render(); toast("Respaldo restaurado"); }
+  catch(err){ toast("No se pudo restaurar. Inténtalo otra vez."); }
+});
+
+// ---------- arranque ----------
+const fromHash = decodeURIComponent(location.hash.slice(1)).replace(/[^A-Za-z0-9_-]/g,"");
+state.id = fromHash || lsGet("a101-id");
+if (state.id){ lsSet("a101-id", state.id); start(); }
+else { $("#setup").hidden=false; setSync("", "Sin lista todavía"); }
 </script>
+</body>
+</html>
