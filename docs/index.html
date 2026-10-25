@@ -1,369 +1,48 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#2f6b4f">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Adultez 101">
-<title>Adultez 101</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap">
-<style>
-/* Layout: one narrow phone column — person switch, progress card, folding sections of checkboxes */
-:root{
-  --bg:#f3f5f2; --surface:#ffffff; --fg:#1d2420; --muted:#66706a; --line:#dde3de;
-  --nani:#2f6b4f; --nani-soft:#e1efe6; --mari:#8a3f6b; --mari-soft:#f4e3ec;
-  --accent:var(--nani); --accent-soft:var(--nani-soft); --danger:#b3392f; --ok:#3aa66a;
-  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
-  --body:"Figtree",ui-sans-serif,system-ui,-apple-system,sans-serif;
-  color-scheme:light;
-}
-@media (prefers-color-scheme:dark){:root{
-  --bg:#141917; --surface:#1c2320; --fg:#e7ece8; --muted:#97a29b; --line:#2c3531;
-  --nani:#7cc59f; --nani-soft:#203a2d; --mari:#e39ac4; --mari-soft:#3d2533; --danger:#ef8a80; color-scheme:dark}}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.45}
-body.mari{--accent:var(--mari);--accent-soft:var(--mari-soft)}
-[hidden]{display:none!important}
-.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-top:calc(20px + env(safe-area-inset-top,0px));padding-bottom:calc(48px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
-header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
-h1{font-family:var(--display);font-weight:800;font-size:2rem;letter-spacing:-.02em;margin:0}
-h1 span{color:var(--accent)}
-h2{font-family:var(--display);font-weight:600;font-size:1.3rem;margin:0}
-p{margin:0}
-.sync{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:6px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
-.sync.live .dot{background:var(--ok)}
-.sync.err .dot{background:var(--danger)}
-.switch{display:grid;grid-template-columns:1fr 1fr;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px}
-.switch button{font:600 1rem var(--body);border:0;border-radius:10px;padding:10px;background:transparent;color:var(--muted);cursor:pointer}
-.switch button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
-button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.summary{background:var(--accent-soft);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
-.summary .row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.big{font-family:var(--display);font-weight:800;font-size:2.4rem;line-height:1;color:var(--accent);font-variant-numeric:tabular-nums}
-.small{color:var(--muted);font-size:.85rem;font-variant-numeric:tabular-nums}
-.bar{height:8px;border-radius:99px;background:var(--surface);overflow:hidden}
-.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
-.filter{display:flex;gap:8px;flex-wrap:wrap}
-.filter button{font:500 .85rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:99px;padding:6px 12px;cursor:pointer}
-.filter button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);font-weight:600}
-.sections{display:flex;flex-direction:column;gap:10px}
-details{background:var(--surface);border:1px solid var(--line);border-radius:14px}
-summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
-summary::-webkit-details-marker{display:none}
-.shead{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.stitle{font-family:var(--display);font-weight:600;font-size:1.08rem;min-width:0}
-.scount{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap;display:flex;align-items:center;gap:6px}
-.scount::after{content:"›";font-size:1.2rem;transition:transform .2s;display:inline-block}
-details[open] .scount::after{transform:rotate(90deg)}
-.sbar{height:4px;border-radius:99px;background:var(--line);overflow:hidden}
-.sbar i{display:block;height:100%;background:var(--accent)}
-.tag{font:600 .68rem var(--body);text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-right:6px}
-ul{list-style:none;margin:0;padding:0 8px 8px}
-li{display:flex;align-items:flex-start;gap:12px;padding:10px 8px;border-top:1px solid var(--line)}
-li label{display:flex;gap:12px;align-items:flex-start;flex:1;min-width:0;cursor:pointer}
-li input[type=checkbox]{appearance:none;-webkit-appearance:none;flex:none;width:22px;height:22px;border:2px solid var(--muted);border-radius:7px;margin:1px 0 0;display:grid;place-items:center;cursor:pointer;background:var(--surface)}
-li input[type=checkbox]:checked{background:var(--accent);border-color:var(--accent)}
-li input[type=checkbox]:checked::after{content:"";width:6px;height:11px;border:solid var(--surface);border-width:0 2.5px 2.5px 0;transform:translateY(-1px) rotate(45deg)}
-li .txt{overflow-wrap:anywhere}
-li.done .txt{color:var(--muted);text-decoration:line-through}
-.del{border:0;background:transparent;color:var(--muted);font-size:1.1rem;line-height:1;padding:4px 6px;border-radius:6px;cursor:pointer}
-.del:hover{color:var(--danger)}
-.del.confirm{color:var(--surface);background:var(--danger);font-size:.75rem;font-weight:600;padding:5px 8px}
-form.add{display:flex;gap:8px;padding:10px 8px 6px;border-top:1px solid var(--line)}
-input[type=text]{flex:1;min-width:0;font:inherit;font-size:16px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--fg)}
-.btn{font:600 .95rem var(--body);border:0;border-radius:10px;padding:10px 16px;background:var(--accent);color:var(--surface);cursor:pointer;text-decoration:none;display:inline-block;text-align:center}
-.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
-.btn:disabled{opacity:.6}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:14px}
-.card .row{display:flex;gap:8px;flex-wrap:wrap}
-.linkbox{font:500 .85rem ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;overflow-wrap:anywhere;user-select:all}
-.empty{background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:24px;text-align:center;color:var(--muted)}
-.tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;padding-top:8px}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:.9rem;max-width:calc(100% - 32px);z-index:5}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <header>
-    <h1>Adultez <span>101</span></h1>
-    <div class="sync" id="sync"><span class="dot"></span><span id="syncTxt">Conectando…</span></div>
-  </header>
-
-  <!-- Avisos y primera vez -->
-  <section class="card" id="setup" hidden>
-    <h2 id="setupTitle">Cargando la lista…</h2>
-    <p id="setupMsg"></p>
-    <div class="row" id="setupActions" hidden></div>
-    <p class="small" id="setupNote" hidden></p>
-  </section>
-
-  <!-- Compartir -->
-  <section class="card" id="share" hidden>
-    <h2>Link para Mari</h2>
-    <p>Mándale este link. Las dos ven la misma lista y los cambios aparecen al instante.</p>
-    <div class="linkbox" id="shareLink"></div>
-    <div class="row">
-      <button class="btn" id="copyBtn">Copiar link</button>
-      <button class="btn ghost" id="shareNative" hidden>Compartir…</button>
-      <button class="btn ghost" id="closeShare">Cerrar</button>
-    </div>
-  </section>
-
-  <div id="main" hidden>
-    <div style="display:flex;flex-direction:column;gap:16px">
-      <div class="switch" role="group" aria-label="De quién es la lista">
-        <button data-p="nani" aria-pressed="true">Nani</button>
-        <button data-p="maria" aria-pressed="false">Mari</button>
-      </div>
-
-      <section class="summary" aria-live="polite">
-        <div class="row">
-          <div class="big" id="pct">0%</div>
-          <div class="small" id="cnt">0 de 0 listos</div>
-        </div>
-        <div class="bar"><i id="barFill" style="width:0%"></i></div>
-        <div class="small" id="other"></div>
-      </section>
-
-      <div class="filter" role="group" aria-label="Filtro">
-        <button data-f="all" aria-pressed="true">Todo</button>
-        <button data-f="todo" aria-pressed="false">Pendientes</button>
-        <button data-f="done" aria-pressed="false">Hechos</button>
-      </div>
-
-      <div class="sections" id="sections"><div class="empty">Cargando la lista…</div></div>
-
-      <div class="tools">
-        <button class="btn ghost" id="openShare">Link para compartir</button>
-        <button class="btn ghost" id="exportBtn">Descargar respaldo</button>
-        <button class="btn ghost" id="importBtn">Restaurar respaldo</button>
-        <input type="file" id="importFile" accept=".json,application/json" hidden>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="toast" id="toast" hidden></div>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script>
-// Configuración del proyecto de Firebase (no es secreta: lo que protege la lista son las reglas y la llave del link).
-window.FIREBASE_CONFIG = {
-  apiKey: "AIzaSyAcJYkQQrjnrs0xmoVPPA9uVYjzVyQQlUk",
-  authDomain: "adulting-101-cf9d7.firebaseapp.com",
-  projectId: "adulting-101-cf9d7",
-  storageBucket: "adulting-101-cf9d7.firebasestorage.app",
-  messagingSenderId: "271245288510",
-  appId: "1:271245288510:web:79f62f30f5c0e4ebff1d6f"
-};
-</script>
-<script>
-// La lista se guarda en Firebase (Firestore) de Google: gratis y no se borra por inactividad.
-// Cada lista es un documento listas/<llave>. La llave va en el link (#...), así que solo quien
-// tiene el link puede verla o cambiarla. Cada teléfono guarda además una copia propia.
-const TAGS = { career: "Carrera", notes: "Notas" };
-// Llave de la lista compartida de Nani y Mari (documento listas/<llave> en Firestore).
-const LISTA = "fnq627q2mc6gafh6bd5nk4bk";
-const $ = s => document.querySelector(s);
-const state = { id:null, data:null, person:"nani", filter:"all", open:{}, confirmDel:null };
-let ref = null;
-
-function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
-function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
-function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toast.h); toast.h=setTimeout(()=>t.hidden=true,2800); }
-function setSync(cls, txt){ $("#sync").className="sync "+cls; $("#syncTxt").textContent=txt; }
-function uid(){ return "id-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2,8); }
-function shareUrl(){ return location.origin + location.pathname; }
-function clean(d){ return { nani: Array.isArray(d?.nani)?d.nani:[], maria: Array.isArray(d?.maria)?d.maria:[] }; }
-
-const p0 = lsGet("a101-person"); if (p0==="nani"||p0==="maria") state.person=p0;
-try { state.open = JSON.parse(lsGet("a101-open")||"{}")||{}; } catch(e){}
-
-// ---------- cambios ----------
-function findSection(d, owner, sid){ return (d[owner]||[]).find(s=>s.id===sid); }
-const ops = {
-  toggle:(owner,sid,tid,done)=>d=>{ const s=findSection(d,owner,sid); const t=s&&s.tasks.find(t=>t.id===tid); if(t) t.done=done; },
-  add:(owner,sid,task)=>d=>{ const s=findSection(d,owner,sid); if(s && !s.tasks.some(t=>t.id===task.id)) s.tasks.push({...task}); },
-  del:(owner,sid,tid)=>d=>{ const s=findSection(d,owner,sid); if(s) s.tasks=s.tasks.filter(t=>t.id!==tid); },
-};
-// Se aplica sobre la versión más nueva (transacción), así no se pisan los cambios de la otra.
-function change(apply){
-  apply(state.data); render();
-  ref.firestore.runTransaction(async tx=>{
-    const snap = await tx.get(ref);
-    const d = clean(snap.data());
-    apply(d);
-    tx.set(ref, { ...d, actualizado: firebase.firestore.FieldValue.serverTimestamp() });
-  }).catch(e=>{ console.error(e); toast("No se guardó el cambio. Revisa tu internet e inténtalo otra vez."); });
-}
-
-// ---------- pantalla ----------
-function stats(owner){
-  let total=0, done=0;
-  for (const s of (state.data?.[owner]||[])) for (const t of s.tasks){ total++; if(t.done) done++; }
-  return { total, done, pct: total?Math.round(done/total*100):0 };
-}
-function render(){
-  if (!state.data) return;
-  document.body.classList.toggle("mari", state.person==="maria");
-  for (const b of document.querySelectorAll(".switch button")) b.setAttribute("aria-pressed", b.dataset.p===state.person);
-  for (const b of document.querySelectorAll(".filter button")) b.setAttribute("aria-pressed", b.dataset.f===state.filter);
-
-  const me=stats(state.person), ok=state.person==="nani"?"maria":"nani", ot=stats(ok);
-  $("#pct").textContent=me.pct+"%";
-  $("#cnt").textContent=me.done+" de "+me.total+" listos";
-  $("#barFill").style.width=me.pct+"%";
-  $("#other").textContent = ot.total ? (ok==="nani"?"Nani":"Mari")+" va en "+ot.pct+"% ("+ot.done+" de "+ot.total+")" : "";
-
-  const box=$("#sections"), owner=state.person, list=state.data[owner]||[];
-  const drafts={}; const focusId=document.activeElement?.id;
-  box.querySelectorAll("form.add input").forEach(i=>{ if(i.value) drafts[i.id]=i.value; });
-  box.textContent="";
-  if (!list.length){ box.innerHTML='<div class="empty">Esta lista está vacía.</div>'; return; }
-
-  for (const s of list){
-    const done=s.tasks.filter(t=>t.done).length, total=s.tasks.length;
-    const d=document.createElement("details");
-    const okey=owner+"/"+s.id;
-    if (state.open[okey]) d.open=true;
-    d.addEventListener("toggle",()=>{ state.open[okey]=d.open; lsSet("a101-open",JSON.stringify(state.open)); });
-
-    const sum=document.createElement("summary");
-    const head=document.createElement("div"); head.className="shead";
-    const title=document.createElement("div"); title.className="stitle";
-    if (TAGS[s.type]){ const tg=document.createElement("span"); tg.className="tag"; tg.textContent=TAGS[s.type]; title.append(tg); }
-    title.append(document.createTextNode(s.title));
-    const c=document.createElement("div"); c.className="scount"; c.textContent=done+"/"+total;
-    head.append(title,c);
-    const sb=document.createElement("div"); sb.className="sbar"; sb.innerHTML='<i style="width:'+(total?done/total*100:0)+'%"></i>';
-    sum.append(head,sb); d.append(sum);
-
-    const ul=document.createElement("ul");
-    for (const t of s.tasks){
-      if (state.filter==="todo"&&t.done) continue;
-      if (state.filter==="done"&&!t.done) continue;
-      const li=document.createElement("li"); if(t.done) li.className="done";
-      const lab=document.createElement("label");
-      const cb=document.createElement("input"); cb.type="checkbox"; cb.checked=!!t.done;
-      cb.addEventListener("change",()=>change(ops.toggle(owner,s.id,t.id,cb.checked)));
-      const sp=document.createElement("span"); sp.className="txt"; sp.textContent=t.text;
-      lab.append(cb,sp); li.append(lab);
-      const del=document.createElement("button"); del.type="button"; del.className="del"; del.setAttribute("aria-label","Borrar tarea");
-      const key=owner+"|"+s.id+"|"+t.id;
-      if (state.confirmDel===key){ del.classList.add("confirm"); del.textContent="¿Borrar?"; } else del.textContent="×";
-      del.addEventListener("click",()=>{
-        if (state.confirmDel===key){ state.confirmDel=null; change(ops.del(owner,s.id,t.id)); toast("Tarea borrada"); }
-        else { state.confirmDel=key; render(); clearTimeout(render.cd); render.cd=setTimeout(()=>{ if(state.confirmDel===key){state.confirmDel=null;render();} },4000); }
-      });
-      li.append(del); ul.append(li);
-    }
-    d.append(ul);
-
-    const f=document.createElement("form"); f.className="add";
-    const inp=document.createElement("input"); inp.type="text"; inp.id="add-"+owner+"-"+s.id; inp.placeholder="Agregar tarea…"; inp.setAttribute("aria-label","Nueva tarea en "+s.title);
-    if (drafts[inp.id]) inp.value=drafts[inp.id];
-    const btn=document.createElement("button"); btn.className="btn"; btn.textContent="Agregar";
-    f.append(inp,btn);
-    f.addEventListener("submit",e=>{ e.preventDefault(); const v=inp.value.trim(); if(!v) return; inp.value=""; change(ops.add(owner,s.id,{id:uid(),text:v,done:false})); setTimeout(()=>document.getElementById(inp.id)?.focus(),0); });
-    d.append(f);
-    box.append(d);
-  }
-  if (focusId && focusId.startsWith("add-")) document.getElementById(focusId)?.focus();
-}
-
-function showSetup(title, msg, showCreate, note){
-  $("#setup").hidden=false; $("#main").hidden=true;
-  $("#setupTitle").textContent=title; $("#setupMsg").textContent=msg;
-  $("#setupActions").hidden=!showCreate; $("#setupNote").hidden=!note; if(note) $("#setupNote").textContent=note;
-}
-function showShare(){ $("#shareLink").textContent=shareUrl(); $("#share").hidden=false; $("#shareNative").hidden=!navigator.share; $("#share").scrollIntoView({behavior:"smooth"}); }
-
-// ---------- conexión ----------
-let creating = false;
-function connect(){
-  // Mientras llega la lista, se muestra la copia guardada en este teléfono.
-  try { const c=JSON.parse(lsGet("a101-copia-"+state.id)||"null"); if (c){ state.data=clean(c); $("#setup").hidden=true; $("#main").hidden=false; render(); } } catch(e){}
-  ref.onSnapshot({ includeMetadataChanges:true }, snap=>{
-    if (!snap.exists){
-      if (snap.metadata.fromCache) return;
-      // La lista no existe todavía (o desapareció): se crea con la copia de este teléfono
-      // o, si no hay, con el respaldo inicial. La transacción evita que dos teléfonos la creen a la vez.
-      if (creating) return;
-      creating = true;
-      (async ()=>{
-        try {
-          const copia = lsGet("a101-copia-"+state.id);
-          const seed = copia ? clean(JSON.parse(copia)) : clean(await (await fetch("adultez101-respaldo.json",{cache:"no-store"})).json());
-          await ref.firestore.runTransaction(async tx=>{
-            const cur = await tx.get(ref);
-            if (!cur.exists) tx.set(ref, { ...seed, actualizado: firebase.firestore.FieldValue.serverTimestamp() });
-          });
-        } catch(e){
-          console.error(e);
-          showSetup("No se pudo abrir la lista", "Revisa tu internet y recarga la página.", false, null);
-          setSync("err","Sin acceso");
-        } finally { creating = false; }
-      })();
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Adultez 101 · Nani & María</title><style>
+:root{color-scheme:light;--bg:#f6f5f2;--ink:#24312e;--muted:#697672;--line:#e2e7e1;--accent:#276d58;--soft:#e5f0e9;--card:#fff;--danger:#a84343}*{box-sizing:border-box}body{margin:0;font:15px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid #93c6a8;outline-offset:2px}.shell{max-width:1100px;margin:auto;padding:28px 20px 80px}.eyebrow{text-transform:uppercase;letter-spacing:.15em;font-size:11px;font-weight:800;color:var(--accent)}h1{font-size:clamp(30px,5vw,48px);letter-spacing:-.045em;line-height:1.1;margin:7px 0 8px}p{color:var(--muted);margin:0}.top{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:24px}.topright{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid var(--line);background:white;border-radius:11px;padding:9px 13px;color:var(--ink);font-weight:600}.btn:hover{background:#f0f6f1}.btn.primary{background:var(--accent);color:white;border-color:var(--accent)}.btn.danger{color:var(--danger)}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 3px 15px #1a2b2108}.dashboard{padding:23px;margin-bottom:18px}.switch{display:inline-flex;padding:4px;background:#edf0ec;border-radius:12px;gap:3px;margin-bottom:20px}.switch button{border:0;background:transparent;border-radius:9px;padding:9px 20px;font-weight:700;color:#66716b}.switch button.active{background:white;color:var(--accent);box-shadow:0 1px 4px #0001}.metrics{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap}.metrics strong{font-size:31px;letter-spacing:-.04em}.bar{height:9px;border-radius:20px;background:#e9eee9;overflow:hidden;margin-top:16px}.fill{height:100%;width:0;background:#38866a;transition:width .2s}.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:18px 0}.search{flex:1;min-width:190px;border:1px solid var(--line);border-radius:11px;padding:11px 13px;background:white}.filters{display:flex;gap:5px;flex-wrap:wrap}.filters button{padding:9px 12px;border:1px solid var(--line);background:white;border-radius:10px}.filters button.active{background:var(--soft);border-color:#b7d7c2;color:#205b47;font-weight:700}.section{margin-bottom:12px;overflow:hidden}.sectionhead{display:flex;align-items:center;gap:12px;padding:17px 18px}.sectionhead .heading{flex:1;text-align:left;background:transparent;border:0;color:var(--ink);font-weight:750;font-size:17px;padding:0}.count{font-size:12px;color:var(--muted);white-space:nowrap}.iconbtn{border:0;background:transparent;color:var(--muted);padding:6px;border-radius:7px}.iconbtn:hover{background:#f2f3f0}.iconbtn.remove:hover{color:var(--danger)}.body{padding:0 18px 17px}.task{display:flex;align-items:center;gap:11px;padding:9px 3px;border-top:1px solid #f1f2ef}.task input[type=checkbox]{accent-color:var(--accent);width:18px;height:18px;flex-shrink:0}.task .txt{flex:1;min-width:0;overflow-wrap:anywhere}.task.done .txt{text-decoration:line-through;color:#87928b}.task .tools{display:flex;gap:1px}.addline{display:flex;gap:8px;margin-top:14px}.addline input{flex:1;min-width:0;border:1px solid var(--line);padding:10px 12px;border-radius:10px}.addsection{padding:20px}.notice{font-size:12px;margin-top:16px;color:var(--muted)}.empty{padding:16px;color:var(--muted)}.hidden{display:none!important}@media(max-width:550px){.shell{padding:19px 12px 60px}.sectionhead{padding:14px 12px}.body{padding:0 12px 14px}.task{gap:7px}.task .tools button{padding:4px}.count{font-size:11px}.topright{width:100%}.topright .btn{flex:1}}
+</style></head><body><main class="shell"><header class="top"><div><div class="eyebrow">Mi espacio personal</div><h1>Adultez 101<span style="color:#448a70">.</span></h1><p>Documentos, finanzas, vida adulta y carrera profesional, en un solo lugar.</p></div><div class="topright"><button class="btn" id="export">↓ Exportar respaldo</button><button class="btn" id="import">↑ Importar respaldo</button><input id="file" type="file" accept="application/json,.json" hidden></div></header><section class="card dashboard"><div class="switch"><button data-person="nani" class="active">Nani</button><button data-person="maria">María</button></div><div class="metrics"><div><div class="eyebrow" id="profileLabel">MI LISTA MAESTRA</div><strong id="progress">0 / 0</strong><p>Tareas completadas</p></div><div style="text-align:right"><strong id="pct">0%</strong><p>Progreso total</p></div></div><div class="bar"><div class="fill" id="fill"></div></div></section><div class="controls"><input class="search" id="search" placeholder="Buscar tareas..." aria-label="Buscar tareas"><div class="filters" id="filters"><button class="active" data-filter="all">Todo</button><button data-filter="adult">Adultez</button><button data-filter="career">Profesional</button><button data-filter="notes">Notas</button><button data-filter="pending">Pendientes</button></div><button class="btn" id="toggleAll">Contraer todo</button></div><div id="sections"></div><div class="card addsection"><strong>+ Crear sección nueva</strong><form id="newSectionForm" class="addline"><input id="sectionName" placeholder="Nombre de la sección..." required><select id="sectionType" class="btn"><option value="adult">Adultez</option><option value="career">Profesional</option><option value="notes">Notas</option></select><button class="btn primary" type="submit">Agregar</button></form></div><p class="notice" id="syncNotice">Conectando…</p></main><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script><script>
+window.FIREBASE_CONFIG={apiKey:"AIzaSyAcJYkQQrjnrs0xmoVPPA9uVYjzVyQQlUk",authDomain:"adulting-101-cf9d7.firebaseapp.com",projectId:"adulting-101-cf9d7",storageBucket:"adulting-101-cf9d7.firebasestorage.app",messagingSenderId:"271245288510",appId:"1:271245288510:web:79f62f30f5c0e4ebff1d6f"};
+</script><script>
+const INITIAL={"nani": [{"id": "nani-s0", "title": "Vida digital y organización", "type": "adult", "tasks": [{"id": "nani-s0-t0", "text": "Crear correo electrónico profesional", "done": true}, {"id": "nani-s0-t1", "text": "Limpiar correos antiguos", "done": false}, {"id": "nani-s0-t2", "text": "Cancelar suscripciones de correos innecesarias", "done": false}, {"id": "nani-s0-t3", "text": "Actualizar teléfonos y correos de recuperación de cuentas importantes", "done": false}, {"id": "nani-s0-t4", "text": "Arreglar gestión de passwords", "done": false}, {"id": "nani-s0-t5", "text": "Crear calendario personal de pendientes y vencimientos", "done": false}]}, {"id": "nani-s1", "title": "Carpeta de documentos importantes", "type": "adult", "tasks": [{"id": "nani-s1-t0", "text": "Crear carpeta digital organizada de documentos importantes", "done": true}, {"id": "nani-s1-t1", "text": "CURP certificada", "done": true}, {"id": "nani-s1-t2", "text": "Acta de nacimiento", "done": true}, {"id": "nani-s1-t3", "text": "INE por ambos lados", "done": true}, {"id": "nani-s1-t4", "text": "Pasaporte mexicano", "done": true}, {"id": "nani-s1-t5", "text": "Licencia de conducir (si aplica)", "done": true}, {"id": "nani-s1-t6", "text": "Constancia de Situación Fiscal (RFC)", "done": false}, {"id": "nani-s1-t7", "text": "Número de Seguridad Social (NSS)", "done": false}, {"id": "nani-s1-t8", "text": "Cartilla de vacunación", "done": false}, {"id": "nani-s1-t9", "text": "Certificado de primaria (ver si lo encuentro)", "done": false}, {"id": "nani-s1-t10", "text": "Certificado de secundaria (ver si lo encuentro)", "done": false}, {"id": "nani-s1-t11", "text": "Certificado de preparatoria", "done": true}, {"id": "nani-s1-t12", "text": "Constancia de estudios universitarios", "done": false}, {"id": "nani-s1-t13", "text": "Historial académico universitario", "done": false}, {"id": "nani-s1-t15", "text": "Certificado oficial de inglés", "done": false}, {"id": "nani-s1-t17", "text": "Diplomas, cursos y reconocimientos", "done": false}, {"id": "nani-s1-t19", "text": "Constancias laborales y de prácticas", "done": false}, {"id": "nani-s1-t21", "text": "Contratos laborales y recibos de nómina", "done": false}, {"id": "nani-s1-t22", "text": "Documentos bancarios y CLABE", "done": false}, {"id": "nani-s1-t23", "text": "Contratos y estados de cuenta de inversiones", "done": false}, {"id": "nani-s1-t24", "text": "Constancia o estado de cuenta AFORE", "done": false}, {"id": "nani-s1-t25", "text": "Reporte de semanas cotizadas IMSS", "done": false}, {"id": "nani-s1-t27", "text": "Pólizas de seguros", "done": false}, {"id": "nani-s1-t28", "text": "Información médica importante y alergias", "done": false}, {"id": "nani-s1-t29", "text": "Contactos de emergencia", "done": false}, {"id": "nani-s1-t33", "text": "Guardar originales físicos", "done": false}, {"id": "nani-s1-t34", "text": "Crear respaldo de documentos", "done": false}, {"id": "id-mvmda1m0-ajye7qa", "text": "Pasaporte español", "done": true}, {"id": "id-mvmdgghq-9xn7my2", "text": "Tomarme fotografias para documentos", "done": false}]}, {"id": "nani-career", "title": "Desarrollo profesional", "type": "career", "tasks": [{"id": "nani-career-t0", "text": "Publicar en LinkedIn sobre mi intercambio en SKKU", "done": false}, {"id": "nani-career-t1", "text": "Actualizar LinkedIn con Cryoinfra y SKKU", "done": false}, {"id": "nani-career-t2", "text": "Actualizar CV en español e inglés", "done": false}, {"id": "nani-career-t3", "text": "Tomarme fotografías profesionales", "done": false}, {"id": "nani-career-t4", "text": "Organizar/Hacer proyectos académicos para portafolio", "done": false}, {"id": "nani-career-t5", "text": "Crear portafolio de ingeniería y negocios", "done": false}, {"id": "nani-career-t6", "text": "Solicitar referencias profesionales y académicas", "done": false}, {"id": "nani-career-t7", "text": "Inscribirme a Excel avanzado", "done": false}, {"id": "nani-career-t9", "text": "Tomar un curso de gestión de proyectos", "done": false}, {"id": "nani-career-t12", "text": "Buscar prácticas o empleo al regresar a México", "done": false}, {"id": "nani-career-t13", "text": "Desarrollar liderazgo y negociación", "done": false}, {"id": "nani-career-t14", "text": "Investigar maestrías", "done": false}, {"id": "nani-career-t15", "text": "Definir plan de carrera hacia dirección empresarial,  Industrial o  emprendimiento", "done": false}]}, {"id": "nani-s2", "title": "Trámites mexicanos", "type": "adult", "tasks": [{"id": "nani-s2-t0", "text": "Verificar RFC y régimen fiscal en SAT", "done": false}, {"id": "nani-s2-t1", "text": "Revisar acceso al portal del SAT", "done": false}, {"id": "nani-s2-t2", "text": "Revisar si necesito e.firma", "done": false}, {"id": "nani-s2-t3", "text": "Consultar vigencia de derechos IMSS", "done": false}, {"id": "nani-s2-t4", "text": "Consultar semanas cotizadas IMSS", "done": false}, {"id": "nani-s2-t5", "text": "Localizar AFORE y verificar datos", "done": false}, {"id": "nani-s2-t6", "text": "Revisar beneficiarios de cuentas y AFORE", "done": false}, {"id": "nani-s2-t7", "text": "Consultar Reporte de Crédito Especial", "done": false}, {"id": "nani-s2-t8", "text": "Revisar vencimiento de documentos oficiales", "done": false}, {"id": "nani-s2-t9", "text": "Entender obligaciones fiscales como trabajadora", "done": false}]}, {"id": "nani-s3", "title": "Finanzas personales", "type": "adult", "tasks": [{"id": "nani-s3-t0", "text": "Inventario de cuentas bancarias", "done": false}, {"id": "nani-s3-t1", "text": "Cerrar cuentas bancarias sin uso", "done": false}, {"id": "nani-s3-t2", "text": "Registrar inversiones y saldos", "done": false}, {"id": "nani-s3-t3", "text": "Revisar últimos tres meses de estados de cuenta", "done": false}, {"id": "nani-s3-t4", "text": "Identificar suscripciones y gastos recurrentes", "done": false}, {"id": "nani-s3-t5", "text": "Cancelar servicios innecesarios", "done": false}, {"id": "nani-s3-t6", "text": "Crear Excel maestro de finanzas", "done": false}, {"id": "nani-s3-t7", "text": "Registrar ingresos y gastos mensuales", "done": false}, {"id": "nani-s3-t8", "text": "Clasificar gastos por categoría", "done": false}, {"id": "nani-s3-t9", "text": "Crear presupuesto mensual", "done": false}, {"id": "nani-s3-t10", "text": "Calcular patrimonio neto", "done": false}, {"id": "nani-s3-t11", "text": "Crear calendario de pagos", "done": false}, {"id": "nani-s3-t12", "text": "Definir metas de ahorro a 12 meses", "done": false}, {"id": "nani-s3-t13", "text": "Separar gastos, ahorro e inversiones", "done": false}, {"id": "nani-s3-t14", "text": "Organizar comprobantes financieros", "done": false}, {"id": "nani-s3-t15", "text": "Establecer revisión financiera mensual", "done": false}, {"id": "id-mvmeumd3-j4tesxb", "text": "Checar mi historial crediticio en el buco de credito", "done": false}]}, {"id": "nani-s4", "title": "Preparación laboral", "type": "adult", "tasks": [{"id": "nani-s4-t0", "text": "Investigar salarios de puestos de entrada", "done": false}, {"id": "nani-s4-t2", "text": "Conocer prestaciones y derechos laborales", "done": false}, {"id": "nani-s4-t3", "text": "Aprender a revisar contratos laborales", "done": false}, {"id": "nani-s4-t4", "text": "Preparar documentos para contratación", "done": false}, {"id": "nani-s4-t5", "text": "Practicar entrevistas laborales", "done": false}, {"id": "nani-s4-t6", "text": "Aprender a leer recibos de nómina", "done": false}, {"id": "nani-s4-t7", "text": "Conocer derechos ante renuncia o despido", "done": false}]}, {"id": "nani-s5", "title": "Primer sueldo y primeros empleos", "type": "adult", "tasks": [{"id": "nani-s5-t0", "text": "Verificar alta y cotizaciones en IMSS", "done": false}, {"id": "nani-s5-t1", "text": "Revisar aportaciones AFORE e INFONAVIT", "done": false}, {"id": "nani-s5-t2", "text": "Crear fondo de emergencia", "done": false}, {"id": "nani-s5-t3", "text": "Automatizar ahorro mensual", "done": false}, {"id": "nani-s5-t4", "text": "Definir aportaciones periódicas a inversiones", "done": false}, {"id": "nani-s5-t5", "text": "Crear apartados para viajes y compras importantes", "done": false}, {"id": "nani-s5-t6", "text": "Evaluar tarjeta de crédito", "done": false}, {"id": "nani-s5-t7", "text": "Pagar el total de la tarjeta puntualmente", "done": false}, {"id": "nani-s5-t8", "text": "Registrar y controlar deudas", "done": false}, {"id": "nani-s5-t9", "text": "Revisar retenciones y obligaciones fiscales", "done": false}, {"id": "nani-s5-t10", "text": "Evaluar seguro médico y coberturas", "done": false}]}, {"id": "nani-s6", "title": "Patrimonio y futuro financiero", "type": "adult", "tasks": [{"id": "nani-s6-t0", "text": "Definir estrategia de inversión a largo plazo", "done": false}, {"id": "nani-s6-t1", "text": "Entender comisiones e impuestos de inversiones", "done": false}, {"id": "nani-s6-t2", "text": "Comparar AFORE por rendimientos y comisiones", "done": false}, {"id": "nani-s6-t3", "text": "Evaluar ahorro voluntario para retiro y PPR", "done": false}, {"id": "nani-s6-t4", "text": "Crear metas financieras a 1, 3 y 5 años", "done": false}, {"id": "nani-s6-t5", "text": "Calcular presupuesto para independizarme", "done": false}, {"id": "nani-s6-t6", "text": "Aprender a revisar contratos de renta", "done": false}, {"id": "nani-s6-t7", "text": "Entender trámites y seguros de automóvil (si aplica)", "done": false}, {"id": "nani-s6-t8", "text": "Revisar patrimonio trimestralmente", "done": false}]}, {"id": "nani-s7", "title": "Habilidades para la vida adulta", "type": "adult", "tasks": [{"id": "nani-s7-t0", "text": "Organizar historial médico y vacunas", "done": false}, {"id": "nani-s7-t1", "text": "Aprender primeros auxilios y RCP", "done": false}, {"id": "nani-s7-t2", "text": "Aprender a manejar y cambiar una llanta", "done": false}, {"id": "nani-s7-t3", "text": "Identificar fraudes digitales y financieros", "done": false}, {"id": "nani-s7-t4", "text": "Conocer cómo hacer aclaraciones bancarias", "done": false}, {"id": "nani-s7-t5", "text": "Mantener calendario de citas, pagos y trámites", "done": false}, {"id": "nani-s7-t6", "text": "Hacer revisión anual de documentos y objetivos", "done": false}]}, {"id": "nani-notes", "title": "Notas y pendientes", "type": "notes", "tasks": [{"id": "nani-notes-t0", "text": "Ver qué pasó con mi certificado Cambridge C1 Advanced y cómo recuperarlo", "done": false}, {"id": "nani-notes-t1", "text": "Revisar RFC, contraseña y acceso al portal del SAT", "done": false}, {"id": "nani-notes-t2", "text": "Revisar cuenta y acceso a Llave CDMX", "done": false}, {"id": "id-mvmdb2dh-onatwyn", "text": "Sacar certificado de Aleman u otro idioma.", "done": false}]}], "maria": [{"id": "maria-s0", "title": "Vida digital y organización", "type": "adult", "tasks": [{"id": "maria-s0-t0", "text": "Crear correo electrónico profesional", "done": false}, {"id": "maria-s0-t1", "text": "Limpiar correos antiguos", "done": false}, {"id": "maria-s0-t2", "text": "Cancelar suscripciones de correos innecesarias", "done": false}, {"id": "maria-s0-t3", "text": "Actualizar teléfonos y correos de recuperación", "done": false}, {"id": "maria-s0-t4", "text": "Arreglar gestión de passwords", "done": false}, {"id": "maria-s0-t5", "text": "Crear calendario personal de pendientes y vencimientos", "done": false}, {"id": "maria-s0-t6", "text": "Respaldar archivos importantes", "done": false}]}, {"id": "maria-s1", "title": "Carpeta de documentos importantes", "type": "adult", "tasks": [{"id": "maria-s1-t0", "text": "Crear carpeta digital organizada de documentos importantes", "done": false}, {"id": "maria-s1-t1", "text": "CURP certificada", "done": false}, {"id": "maria-s1-t2", "text": "Acta de nacimiento", "done": false}, {"id": "maria-s1-t3", "text": "INE por ambos lados", "done": false}, {"id": "maria-s1-t4", "text": "Pasaporte mexicano", "done": false}, {"id": "maria-s1-t5", "text": "Licencia de conducir (si aplica)", "done": false}, {"id": "maria-s1-t6", "text": "Constancia de Situación Fiscal (RFC)", "done": false}, {"id": "maria-s1-t7", "text": "Número de Seguridad Social (NSS)", "done": false}, {"id": "maria-s1-t8", "text": "Cartilla de vacunación", "done": false}, {"id": "maria-s1-t9", "text": "Certificado de primaria", "done": false}, {"id": "maria-s1-t10", "text": "Certificado de secundaria", "done": false}, {"id": "maria-s1-t11", "text": "Certificado de preparatoria", "done": false}, {"id": "maria-s1-t12", "text": "Constancia de estudios universitarios", "done": false}, {"id": "maria-s1-t13", "text": "Historial académico universitario", "done": false}, {"id": "maria-s1-t14", "text": "Título universitario y cédula profesional (cuando corresponda)", "done": false}, {"id": "maria-s1-t15", "text": "Certificado oficial de inglés", "done": false}, {"id": "maria-s1-t16", "text": "Otros certificados de idiomas", "done": false}, {"id": "maria-s1-t17", "text": "Diplomas, cursos y reconocimientos", "done": false}, {"id": "maria-s1-t18", "text": "Currículum actualizado", "done": false}, {"id": "maria-s1-t19", "text": "Constancias laborales y de prácticas", "done": false}, {"id": "maria-s1-t20", "text": "Cartas de recomendación", "done": false}, {"id": "maria-s1-t21", "text": "Contratos laborales y recibos de nómina", "done": false}, {"id": "maria-s1-t22", "text": "Documentos bancarios y CLABE", "done": false}, {"id": "maria-s1-t23", "text": "Contratos y estados de cuenta de inversiones", "done": false}, {"id": "maria-s1-t24", "text": "Constancia o estado de cuenta AFORE", "done": false}, {"id": "maria-s1-t25", "text": "Reporte de semanas cotizadas IMSS", "done": false}, {"id": "maria-s1-t26", "text": "Documentos fiscales y declaraciones (si aplica)", "done": false}, {"id": "maria-s1-t27", "text": "Pólizas de seguros", "done": false}, {"id": "maria-s1-t28", "text": "Información médica importante y alergias", "done": false}, {"id": "maria-s1-t29", "text": "Contactos de emergencia", "done": false}, {"id": "maria-s1-t30", "text": "Visas y permisos migratorios (si aplica)", "done": false}, {"id": "maria-s1-t31", "text": "Documentos de intercambio académico (si aplica)", "done": false}, {"id": "maria-s1-t32", "text": "Contratos y garantías importantes (si aplica)", "done": false}, {"id": "maria-s1-t33", "text": "Guardar originales físicos", "done": false}, {"id": "maria-s1-t34", "text": "Crear respaldo cifrado de documentos", "done": false}]}, {"id": "maria-career", "title": "Desarrollo profesional", "type": "career", "tasks": [{"id": "maria-career-t0", "text": "Crear o actualizar CV audiovisual", "done": false}, {"id": "maria-career-t1", "text": "Actualizar LinkedIn y perfiles profesionales", "done": false}, {"id": "maria-career-t2", "text": "Tomarse fotografías profesionales", "done": false}, {"id": "maria-career-t3", "text": "Seleccionar mejores cortometrajes y proyectos", "done": false}, {"id": "maria-career-t4", "text": "Crear showreel audiovisual", "done": false}, {"id": "maria-career-t5", "text": "Organizar portafolio cinematográfico", "done": false}, {"id": "maria-career-t6", "text": "Registrar créditos y responsabilidades de producciones", "done": false}, {"id": "maria-career-t7", "text": "Organizar guiones y proyectos propios", "done": false}, {"id": "maria-career-t8", "text": "Crear perfil IMDb cuando tenga créditos elegibles", "done": false}, {"id": "maria-career-t9", "text": "Organizar certificados y reconocimientos", "done": false}, {"id": "maria-career-t10", "text": "Definir especialidad dentro del cine", "done": false}, {"id": "maria-career-t11", "text": "Elegir curso de especialización audiovisual", "done": false}, {"id": "maria-career-t12", "text": "Practicar entrevistas y presentaciones de proyectos", "done": false}, {"id": "maria-career-t13", "text": "Investigar productoras y puestos de entrada", "done": false}, {"id": "maria-career-t14", "text": "Buscar prácticas y experiencia en rodajes", "done": false}, {"id": "maria-career-t15", "text": "Construir contactos en la industria", "done": false}, {"id": "maria-career-t16", "text": "Investigar festivales, convocatorias y fondos", "done": false}, {"id": "maria-career-t17", "text": "Crear plan de carrera audiovisual", "done": false}]}, {"id": "maria-s2", "title": "Trámites mexicanos", "type": "adult", "tasks": [{"id": "maria-s2-t0", "text": "Verificar RFC y régimen fiscal en SAT", "done": false}, {"id": "maria-s2-t1", "text": "Revisar acceso al portal del SAT", "done": false}, {"id": "maria-s2-t2", "text": "Revisar si necesito e.firma", "done": false}, {"id": "maria-s2-t3", "text": "Consultar vigencia de derechos IMSS", "done": false}, {"id": "maria-s2-t4", "text": "Consultar semanas cotizadas IMSS", "done": false}, {"id": "maria-s2-t5", "text": "Localizar AFORE y verificar datos", "done": false}, {"id": "maria-s2-t6", "text": "Revisar beneficiarios de cuentas y AFORE", "done": false}, {"id": "maria-s2-t7", "text": "Consultar Reporte de Crédito Especial", "done": false}, {"id": "maria-s2-t8", "text": "Revisar vencimiento de documentos oficiales", "done": false}, {"id": "maria-s2-t9", "text": "Entender obligaciones fiscales como trabajadora", "done": false}]}, {"id": "maria-s3", "title": "Finanzas personales", "type": "adult", "tasks": [{"id": "maria-s3-t0", "text": "Inventario de cuentas bancarias", "done": false}, {"id": "maria-s3-t1", "text": "Cerrar cuentas bancarias sin uso", "done": false}, {"id": "maria-s3-t2", "text": "Registrar inversiones y saldos", "done": false}, {"id": "maria-s3-t3", "text": "Revisar últimos tres meses de estados de cuenta", "done": false}, {"id": "maria-s3-t4", "text": "Identificar suscripciones y gastos recurrentes", "done": false}, {"id": "maria-s3-t5", "text": "Cancelar servicios innecesarios", "done": false}, {"id": "maria-s3-t6", "text": "Crear Excel maestro de finanzas", "done": false}, {"id": "maria-s3-t7", "text": "Registrar ingresos y gastos mensuales", "done": false}, {"id": "maria-s3-t8", "text": "Clasificar gastos por categoría", "done": false}, {"id": "maria-s3-t9", "text": "Crear presupuesto mensual", "done": false}, {"id": "maria-s3-t10", "text": "Calcular patrimonio neto", "done": false}, {"id": "maria-s3-t11", "text": "Crear calendario de pagos", "done": false}, {"id": "maria-s3-t12", "text": "Definir metas de ahorro a 12 meses", "done": false}, {"id": "maria-s3-t13", "text": "Separar gastos, ahorro e inversiones", "done": false}, {"id": "maria-s3-t14", "text": "Organizar comprobantes financieros", "done": false}, {"id": "maria-s3-t15", "text": "Establecer revisión financiera mensual", "done": false}]}, {"id": "maria-s4", "title": "Preparación laboral", "type": "adult", "tasks": [{"id": "maria-s4-t0", "text": "Investigar salarios de puestos de entrada", "done": false}, {"id": "maria-s4-t1", "text": "Entender sueldo bruto y neto", "done": false}, {"id": "maria-s4-t2", "text": "Conocer prestaciones y derechos laborales", "done": false}, {"id": "maria-s4-t3", "text": "Aprender a revisar contratos laborales", "done": false}, {"id": "maria-s4-t4", "text": "Preparar documentos para contratación", "done": false}, {"id": "maria-s4-t5", "text": "Practicar entrevistas laborales", "done": false}, {"id": "maria-s4-t6", "text": "Aprender a leer recibos de nómina", "done": false}, {"id": "maria-s4-t7", "text": "Conocer derechos ante renuncia o despido", "done": false}]}, {"id": "maria-s5", "title": "Primer sueldo y primeros empleos", "type": "adult", "tasks": [{"id": "maria-s5-t0", "text": "Verificar alta y cotizaciones en IMSS", "done": false}, {"id": "maria-s5-t1", "text": "Revisar aportaciones AFORE e INFONAVIT", "done": false}, {"id": "maria-s5-t2", "text": "Crear fondo de emergencia", "done": false}, {"id": "maria-s5-t3", "text": "Automatizar ahorro mensual", "done": false}, {"id": "maria-s5-t4", "text": "Definir aportaciones periódicas a inversiones", "done": false}, {"id": "maria-s5-t5", "text": "Crear apartados para viajes y compras importantes", "done": false}, {"id": "maria-s5-t6", "text": "Evaluar tarjeta de crédito", "done": false}, {"id": "maria-s5-t7", "text": "Pagar el total de la tarjeta puntualmente", "done": false}, {"id": "maria-s5-t8", "text": "Registrar y controlar deudas", "done": false}, {"id": "maria-s5-t9", "text": "Revisar retenciones y obligaciones fiscales", "done": false}, {"id": "maria-s5-t10", "text": "Evaluar seguro médico y coberturas", "done": false}]}, {"id": "maria-s6", "title": "Patrimonio y futuro financiero", "type": "adult", "tasks": [{"id": "maria-s6-t0", "text": "Definir estrategia de inversión a largo plazo", "done": false}, {"id": "maria-s6-t1", "text": "Entender comisiones e impuestos de inversiones", "done": false}, {"id": "maria-s6-t2", "text": "Comparar AFORE por rendimientos y comisiones", "done": false}, {"id": "maria-s6-t3", "text": "Evaluar ahorro voluntario para retiro y PPR", "done": false}, {"id": "maria-s6-t4", "text": "Crear metas financieras a 1, 3 y 5 años", "done": false}, {"id": "maria-s6-t5", "text": "Calcular presupuesto para independizarme", "done": false}, {"id": "maria-s6-t6", "text": "Aprender a revisar contratos de renta", "done": false}, {"id": "maria-s6-t7", "text": "Entender trámites y seguros de automóvil (si aplica)", "done": false}, {"id": "maria-s6-t8", "text": "Revisar patrimonio trimestralmente", "done": false}]}, {"id": "maria-s7", "title": "Habilidades para la vida adulta", "type": "adult", "tasks": [{"id": "maria-s7-t0", "text": "Organizar historial médico y vacunas", "done": false}, {"id": "maria-s7-t1", "text": "Aprender primeros auxilios y RCP", "done": false}, {"id": "maria-s7-t2", "text": "Aprender a manejar y cambiar una llanta", "done": false}, {"id": "maria-s7-t3", "text": "Identificar fraudes digitales y financieros", "done": false}, {"id": "maria-s7-t4", "text": "Conocer cómo hacer aclaraciones bancarias", "done": false}, {"id": "maria-s7-t5", "text": "Mantener calendario de citas, pagos y trámites", "done": false}, {"id": "maria-s7-t6", "text": "Hacer revisión anual de documentos y objetivos", "done": false}]}, {"id": "maria-notes", "title": "Notas y pendientes", "type": "notes", "tasks": []}]};const KEY='adultez101-v1';let state;try{const saved=JSON.parse(localStorage.getItem(KEY));state=saved&&Array.isArray(saved.nani)&&Array.isArray(saved.maria)?saved:INITIAL}catch{state=INITIAL}let person='nani',filter='all',search='',collapsed=new Set();const $=s=>document.querySelector(s);const uid=()=>('id-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,9));const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}if(window.cloudSave)cloudSave()};const escapeHtml=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function render(){const gs=state[person],all=gs.flatMap(g=>g.tasks),done=all.filter(t=>t.done).length;$('#progress').textContent=`${done} / ${all.length}`;$('#pct').textContent=all.length?Math.round(done/all.length*100)+'%':'0%';$('#fill').style.width=(all.length?done/all.length*100:0)+'%';$('#profileLabel').textContent=person==='nani'?'LISTA DE NANI':'LISTA DE MARÍA';document.querySelectorAll('[data-person]').forEach(b=>b.classList.toggle('active',b.dataset.person===person));document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter===filter));const root=$('#sections');root.innerHTML='';let shown=0;gs.forEach(g=>{if(filter==='career'&&g.type!=='career'||filter==='adult'&&g.type!=='adult'||filter==='notes'&&g.type!=='notes')return;const matching=g.tasks.filter(t=>(filter!=='pending'||!t.done)&&t.text.toLowerCase().includes(search));if(search&&!matching.length&&!g.title.toLowerCase().includes(search))return;shown++;const card=document.createElement('section');card.className='card section';const isClosed=collapsed.has(g.id);card.innerHTML=`<div class="sectionhead"><button class="heading" data-action="collapse">${isClosed?'▸':'▾'} ${escapeHtml(g.title)}</button><span class="count">${g.tasks.filter(t=>t.done).length}/${g.tasks.length}</span><button class="iconbtn" data-action="renameSection" title="Renombrar sección" aria-label="Renombrar sección">✎</button><button class="iconbtn remove" data-action="deleteSection" title="Eliminar sección" aria-label="Eliminar sección">✕</button></div><div class="body ${isClosed?'hidden':''}"></div>`;const body=card.querySelector('.body');(search&&g.title.toLowerCase().includes(search)?g.tasks.filter(t=>filter!=='pending'||!t.done):matching).forEach(t=>{const line=document.createElement('div');line.className='task'+(t.done?' done':'');line.innerHTML=`<input type="checkbox" ${t.done?'checked':''} aria-label="Completar tarea"><span class="txt">${escapeHtml(t.text)}</span><div class="tools"><button class="iconbtn" data-action="edit" title="Editar tarea" aria-label="Editar tarea">✎</button><button class="iconbtn remove" data-action="delete" title="Eliminar tarea" aria-label="Eliminar tarea">✕</button></div>`;line.querySelector('input').addEventListener('change',e=>{t.done=e.target.checked;save();render()});line.querySelector('[data-action=edit]').onclick=()=>{const x=prompt('Editar tarea:',t.text);if(x!==null&&x.trim()){t.text=x.trim();save();render()}};line.querySelector('[data-action=delete]').onclick=()=>{if(confirm('¿Eliminar esta tarea?')){g.tasks=g.tasks.filter(v=>v.id!==t.id);save();render()}};body.appendChild(line)});const form=document.createElement('form');form.className='addline';form.innerHTML='<input aria-label="Nueva tarea" placeholder="Agregar nueva tarea..." required><button class="btn primary" type="submit">+ Agregar</button>';form.onsubmit=e=>{e.preventDefault();const v=form.querySelector('input').value.trim();if(v){g.tasks.push({id:uid(),text:v,done:false});save();render()}};body.appendChild(form);card.querySelector('[data-action=collapse]').onclick=()=>{collapsed.has(g.id)?collapsed.delete(g.id):collapsed.add(g.id);render()};card.querySelector('[data-action=renameSection]').onclick=()=>{const x=prompt('Nuevo nombre de la sección:',g.title);if(x!==null&&x.trim()){g.title=x.trim();save();render()}};card.querySelector('[data-action=deleteSection]').onclick=()=>{if(confirm(`¿Eliminar la sección «${g.title}» y todas sus tareas?`)){state[person]=state[person].filter(v=>v.id!==g.id);save();render()}};root.appendChild(card)});if(!shown)root.innerHTML='<div class="card empty">No hay tareas que coincidan con tu búsqueda.</div>'}document.querySelectorAll('[data-person]').forEach(b=>b.onclick=()=>{person=b.dataset.person;collapsed.clear();render()});document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;render()});$('#search').oninput=e=>{search=e.target.value.toLowerCase().trim();render()};$('#toggleAll').onclick=()=>{const all=state[person].map(g=>g.id);if(all.every(id=>collapsed.has(id))){collapsed.clear()}else{collapsed=new Set(all)}render()};$('#newSectionForm').onsubmit=e=>{e.preventDefault();const name=$('#sectionName').value.trim();if(!name)return;state[person].push({id:uid(),title:name,type:$('#sectionType').value,tasks:[]});$('#sectionName').value='';filter='all';save();render()};$('#export').onclick=()=>{const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='adultez101-respaldo.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};$('#import').onclick=()=>$('#file').click();$('#file').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const obj=JSON.parse(await file.text());if(!['nani','maria'].every(k=>Array.isArray(obj[k])&&obj[k].every(g=>typeof g.title==='string'&&Array.isArray(g.tasks)&&g.tasks.every(t=>typeof t.text==='string'&&typeof t.done==='boolean'))))throw Error('Formato incorrecto');if(confirm('¿Reemplazar ambas listas con el respaldo importado?')){state=obj;save();render();alert('Respaldo importado.')}}catch(err){alert('No se pudo importar: '+err.message)}e.target.value=''};render();
+/* ---- Sincronización entre teléfonos (Firebase) ---- */
+(function(){
+  const LISTA="fnq627q2mc6gafh6bd5nk4bk";
+  const note=$('#syncNotice');
+  const say=t=>{note.textContent=t};
+  const OK='Los cambios se guardan solos y se ven en el teléfono de Nani y de María. Si quieres, exporta un respaldo de vez en cuando.';
+  if(!window.firebase||!window.FIREBASE_CONFIG){say('No se pudo conectar. Los cambios solo se guardan en este teléfono. Revisa tu internet y recarga la página.');return}
+  let ref,ready=false,pendingRender=false;
+  try{
+    firebase.initializeApp(window.FIREBASE_CONFIG);
+    const db=firebase.firestore();
+    db.enablePersistence({synchronizeTabs:true}).catch(()=>{});
+    ref=db.collection('listas').doc(LISTA);
+  }catch(e){say('No se pudo conectar: '+e.message);return}
+  const clean=d=>({nani:Array.isArray(d&&d.nani)?d.nani:[],maria:Array.isArray(d&&d.maria)?d.maria:[]});
+  const typing=()=>{const a=document.activeElement;return a&&a.tagName==='INPUT'&&a.closest('#sections')&&a.value};
+  window.cloudSave=()=>{if(!ready)return;ref.set({...clean(state),actualizado:firebase.firestore.FieldValue.serverTimestamp()}).catch(e=>say('No se pudo guardar el último cambio ('+e.code+'). Revisa tu internet.'))};
+  document.addEventListener('focusout',()=>{if(pendingRender){pendingRender=false;setTimeout(render,0)}});
+  const explain=e=>{
+    if(e&&e.code==='permission-denied')return'Firebase no dio permiso. Revisa que las Reglas de Firestore estén publicadas.';
+    if(e&&(e.code==='not-found'||e.code==='failed-precondition'))return'No se encontró la base de datos en Firebase. Revisa que Firestore esté creado con el ID (default).';
+    return'No se pudo conectar ('+(e&&e.code||'error')+'). Los cambios se guardan en este teléfono.';
+  };
+  let creating=false;
+  ref.onSnapshot({includeMetadataChanges:true},snap=>{
+    if(!snap.exists){
+      if(snap.metadata.fromCache||creating)return;
+      creating=true;
+      ref.firestore.runTransaction(async tx=>{const cur=await tx.get(ref);if(!cur.exists)tx.set(ref,{...clean(state),actualizado:firebase.firestore.FieldValue.serverTimestamp()})})
+        .catch(e=>say(explain(e))).finally(()=>{creating=false});
       return;
     }
-    state.data = clean(snap.data());
-    if (!snap.metadata.hasPendingWrites) lsSet("a101-copia-"+state.id, JSON.stringify(state.data));
-    $("#setup").hidden=true; $("#main").hidden=false;
-    setSync(snap.metadata.fromCache?"err":"live", snap.metadata.fromCache?"Sin conexión · se guarda al volver":"En vivo");
-    render();
-  }, err=>{ console.error(err); setSync("err","Sin acceso a la lista"); toast("No se pudo abrir la lista. Revisa tu internet."); });
-}
-
-// ---------- botones ----------
-document.querySelectorAll(".switch button").forEach(b=>b.addEventListener("click",()=>{ state.person=b.dataset.p; lsSet("a101-person",state.person); render(); }));
-document.querySelectorAll(".filter button").forEach(b=>b.addEventListener("click",()=>{ state.filter=b.dataset.f; render(); }));
-$("#openShare").addEventListener("click", showShare);
-$("#closeShare").addEventListener("click", ()=>$("#share").hidden=true);
-$("#copyBtn").addEventListener("click", async ()=>{
-  try { await navigator.clipboard.writeText(shareUrl()); toast("Link copiado"); }
-  catch(e){ const r=document.createRange(); r.selectNodeContents($("#shareLink")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast("Selecciona y copia el link"); }
-});
-$("#shareNative").addEventListener("click", ()=>navigator.share({ title:"Adultez 101", text:"Nuestra lista de Adultez 101", url:shareUrl() }).catch(()=>{}));
-$("#exportBtn").addEventListener("click", ()=>{
-  if (!state.data) return;
-  const a=document.createElement("a");
-  a.href=URL.createObjectURL(new Blob([JSON.stringify(state.data,null,2)],{type:"application/json"}));
-  a.download="adultez101-respaldo-"+new Date().toISOString().slice(0,10)+".json";
-  document.body.append(a); a.click(); a.remove();
-});
-$("#importBtn").addEventListener("click", ()=>$("#importFile").click());
-$("#importFile").addEventListener("change", async e=>{
-  const f=e.target.files[0]; e.target.value=""; if(!f) return;
-  let d; try { d=JSON.parse(await f.text()); } catch(err){ toast("Ese archivo no es un respaldo válido."); return; }
-  if (!d || (!Array.isArray(d.nani)&&!Array.isArray(d.maria))){ toast("El archivo no tiene listas de Nani o Mari."); return; }
-  try { await ref.set({ ...clean(d), actualizado: firebase.firestore.FieldValue.serverTimestamp() }); toast("Respaldo restaurado"); }
-  catch(err){ toast("No se pudo restaurar. Inténtalo otra vez."); }
-});
-
-// ---------- arranque ----------
-(function start(){
-  const cfg = window.FIREBASE_CONFIG;
-  if (!window.firebase){
-    showSetup("No se pudo cargar Firebase", "Revisa tu internet y recarga la página. Si usas un bloqueador de anuncios, desactívalo para esta página.", false, null);
-    setSync("err","Sin conexión"); return;
-  }
-  if (!cfg || !cfg.apiKey){
-    showSetup("Falta conectar Firebase", "La página todavía no está conectada a Firebase.", false, null);
-    setSync("err","Sin configurar"); return;
-  }
-  firebase.initializeApp(cfg);
-  const fs = firebase.firestore();
-  fs.enablePersistence({ synchronizeTabs:true }).catch(()=>{});
-  state.id = LISTA;
-  ref = fs.collection("listas").doc(state.id);
-  showSetup("Cargando la lista…", "Un momento.", false, null);
-  connect();
+    ready=true;
+    say(snap.metadata.fromCache?'Sin internet: los cambios se guardan y se suben al volver la conexión.':OK);
+    if(snap.metadata.hasPendingWrites)return;
+    const d=clean(snap.data());
+    if(JSON.stringify(d)===JSON.stringify(clean(state)))return;
+    state=d;try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
+    if(typing())pendingRender=true;else render();
+  },e=>say(explain(e)));
 })();
-</script>
-</body>
-</html>
+</script></body></html>
