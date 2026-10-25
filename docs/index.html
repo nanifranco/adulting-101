@@ -153,7 +153,17 @@ input[type=text]{flex:1;min-width:0;font:inherit;font-size:16px;padding:9px 12px
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
+<script>
+// Configuración del proyecto de Firebase (no es secreta: lo que protege la lista son las reglas y la llave del link).
+window.FIREBASE_CONFIG = {
+  apiKey: "AIzaSyAcJYkQQrjnrs0xmoVPPA9uVYjzVyQQlUk",
+  authDomain: "adulting-101-cf9d7.firebaseapp.com",
+  projectId: "adulting-101-cf9d7",
+  storageBucket: "adulting-101-cf9d7.firebasestorage.app",
+  messagingSenderId: "271245288510",
+  appId: "1:271245288510:web:79f62f30f5c0e4ebff1d6f"
+};
+</script>
 <script>
 // La lista se guarda en Firebase (Firestore) de Google: gratis y no se borra por inactividad.
 // Cada lista es un documento listas/<llave>. La llave va en el link (#...), así que solo quien
@@ -341,8 +351,12 @@ $("#importFile").addEventListener("change", async e=>{
 // ---------- arranque ----------
 (function start(){
   const cfg = window.FIREBASE_CONFIG;
-  if (!window.firebase || !cfg || !cfg.apiKey){
-    showSetup("Falta conectar Firebase", "La página todavía no está conectada a Firebase. Cuando Nani termine la configuración, esta página empieza a funcionar.", false, null);
+  if (!window.firebase){
+    showSetup("No se pudo cargar Firebase", "Revisa tu internet y recarga la página. Si usas un bloqueador de anuncios, desactívalo para esta página.", false, null);
+    setSync("err","Sin conexión"); return;
+  }
+  if (!cfg || !cfg.apiKey){
+    showSetup("Falta conectar Firebase", "La página todavía no está conectada a Firebase.", false, null);
     setSync("err","Sin configurar"); return;
   }
   firebase.initializeApp(cfg);
